@@ -548,6 +548,7 @@ yyerrhandle:
   yyvs[++yyvsp_offset] = Yystacktype(yylval);
 #endif
 
+  yystate = yyn;
   goto yynewstate;
 } /* end of region yyregion */
 }
