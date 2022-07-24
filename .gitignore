@@ -1,0 +1,221 @@
+# Prerequisites
+*.d
+
+# Object files
+*.o
+*.ko
+*.obj
+*.elf
+
+# Linker output
+*.ilk
+*.map
+*.exp
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Libraries
+*.lib
+*.a
+*.la
+*.lo
+
+# Shared objects (inc. Windows DLLs)
+*.dll
+*.so
+*.so.*
+*.dylib
+
+# Executables
+*.exe
+*.out
+*.app
+*.i*86
+*.x86_64
+*.hex
+
+# Debug files
+*.dSYM/
+*.su
+*.idb
+*.pdb
+
+# Kernel Module Compile Results
+*.mod*
+*.cmd
+.tmp_versions/
+modules.order
+Module.symvers
+Mkfile.old
+dkms.conf
+
+# http://www.gnu.org/software/automake
+
+#Makefile.in
+/ar-lib
+/mdate-sh
+/py-compile
+/test-driver
+/ylwrap
+.deps/
+.dirstamp
+
+# http://www.gnu.org/software/autoconf
+
+autom4te.cache
+/autoscan.log
+/autoscan-*.log
+/aclocal.m4
+/compile
+/config.cache
+/config.guess
+/config.h.in
+/config.log
+/config.status
+/config.sub
+#/configure
+/configure.scan
+/depcomp
+/install-sh
+/missing
+/stamp-h1
+
+# Also for gc
+/gc/autoscan.log
+/gc/autoscan-*.log
+#/gc/aclocal.m4
+#/gc/compile
+/gc/config.cache
+#/gc/config.guess
+/gc/config.h.in
+/gc/config.log
+/gc/config.status
+#/gc/config.sub
+#/gc/configure
+/gc/configure.scan
+#/gc/depcomp
+#/gc/install-sh
+#/gc/missing
+/gc/stamp-h1
+
+# https://www.gnu.org/software/libtool/
+
+/ltmain.sh
+
+# http://www.gnu.org/software/texinfo
+
+/texinfo.tex
+
+# http://www.gnu.org/software/m4/
+
+m4/libtool.m4
+m4/ltoptions.m4
+m4/ltsugar.m4
+m4/ltversion.m4
+m4/lt~obsolete.m4
+
+# Generated Makefile
+# (meta build system like autotools,
+# can automatically generate from config.status script
+# (which is called by configure script))
+/Makefile.inc
+
+# Additional libtool ignores
+.libs
+/gc/Makefile
+/gc/bdw-gc.pc
+/gc/include/config.h
+/gc/include/stamp-h1
+/gc/libtool
+
+# Project specific
+/bin/buildlib
+/bin/cycbison
+/bin/cycdoc
+/bin/cycflex
+/bin/cyclex
+/bin/cyclone
+/bin/errorgen
+/bin/lib/
+/bin/rewrite
+/bin/stringify
+/bin/yakker
+/build
+/gc_pthread
+
+# cycbison output
+/src/parse_tab.cyc
+/src/parse_tab.h
+/lib/xml/xmlparse_tab.cyc
+/lib/xml/xmlparse_tab.h
+/tests/foo_tab.cyc
+/tests/foo_tab.h
+/tests/foo.output
+/tools/cyclex/parser_tab.cyc
+/tools/cyclex/parser_tab.h
+/tools/cyclex/parser.output
+/tools/yakker/parse_tab.cyc
+/tools/yakker/parse_tab.h
+
+# cyclex output
+/lib/xml/xmlscan.cyc
+/tools/cyclex/lexer.cyc
+/tools/flex/cycflex.cyc
+/tools/yakker/lex.cyc
+
+# yakker output
+/tools/yakker/instantiate.cyc
+# There is no source for the file in the repo... am I right?
+/tools/yakker/ykbuf.cyc
+
+# Generated as part of testing
+/tests/*.c
+!/tests/testbget.c
+/tests/cinclude
+/tests/cyctest
+/tests/dynregion
+/tests/flatlist
+/tests/foo
+/tests/hello
+/tests/histogram
+/tests/md5
+/tests/multimethod
+/tests/patterns
+/tests/rc
+/tests/refcnt_test
+/tests/scheme
+/tests/scheme-2
+/tests/streambufftest
+/tests/subset
+/tests/test_currgn
+/tests/test_getopt
+/tests/test_large_vc_terms
+/tests/test_regions
+/tests/testaqualsuccess
+/tests/testasm
+/tests/testbget
+/tests/unique_patterns
+/tests/zeroterm
+!/tests/fail1.out
+!/tests/fail2.out
+!/tests/fail3.out
+!/tests/fail4.out
+!/tests/tad.out
+!/tests/taf.out
+
+# Tool binaries
+/tools/bison/cycbison
+/tools/cyclex/cyclex
+/tools/errorgen/errorgen
+/tools/flex/cycflex
+/tools/rewrite/rewrite
+/tools/stringify/stringify
+/tools/yakker/yakker
+
+# Other special generated files
+# Generated from /tools/yakker/templates*
+/tools/yakker/strings_yakker.cyc
+# Generated from /tools/bison/cycbison.simple
+/tools/bison/string_cycbison.simple.cyc
