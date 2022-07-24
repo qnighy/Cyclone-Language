@@ -365,7 +365,7 @@ namespace Absyn {
   EXTERN_ABSYN datatype TyCon {
     VoidCon;// MemKind
     IntCon(sign_t,size_of_t); // char, short, int.  MemKind unless B4
-    FloatCon(int);  // MemKind.  0=>float, 1=>double, _=>long double
+    FloatCon(int);  // MemKind.  0=>float, 1=>double, 2=>long double, 3=>_Float128
     ComplexCon; // complex ranges over intcon and floatcons only.
     RgnHandleCon; // region_t<`r> (handle for allocating).  RgnKind -> BoxKind
     TagCon;     // tag_t<t>.  IntKind -> BoxKind.
@@ -444,7 +444,7 @@ namespace Absyn {
   };
 
   // Used in attributes below.
-  EXTERN_ABSYN enum Format_Type { Printf_ft, Scanf_ft };
+  EXTERN_ABSYN enum Format_Type { Printf_ft, Scanf_ft, Strfmon_ft };
 
   // See GCC info pages for GCC attributes we try to support; see attributes.cyc
   EXTERN_ABSYN datatype Attribute {
@@ -478,6 +478,15 @@ namespace Absyn {
     Alias_att(string_t);
     Always_inline_att;
     No_throw_att;
+    Leaf_att;
+    Nonnull_att(int);
+    Malloc_att;
+    Alloc_size_att(int);
+    Alloc_size2_att(int, int);
+    Warn_unused_result_att;
+    Returns_twice_att;
+    Indirect_return_att;
+    Nonstring_att;
   };
 
   // used when parsing/pretty-printing function definitions.
@@ -610,6 +619,8 @@ namespace Absyn {
     New_e(exp_opt_t, exp_t, exp_opt_t); // first expression is region -- null is heap, 3rd is aqual_t -- null is ALIASABLE
     Sizeoftype_e(type_t); // sizeof(t)
     Sizeofexp_e(exp_t); // sizeof(e)
+    Alignoftype_e(type_t); // __ailgnof__(t)
+    Alignofexp_e(exp_t); // __alignof__(e)
     Offsetof_e(type_t,list_t<offsetof_field_t>); // offsetof(t,e)
     Deref_e(exp_t); // *e
     // For the next two cases, the is_read field determines whether or not
@@ -960,8 +971,8 @@ namespace Absyn {
   extern type_t char_type, uchar_type, ushort_type, uint_type, ulong_type, ulonglong_type;
   // signed types
   extern type_t schar_type, sshort_type, sint_type, slong_type, slonglong_type;
-  // float, double, long double, wchar_t
-  extern type_t float_type, double_type, long_double_type, wchar_type();
+  // float, double, long double, _Float128, wchar_t
+  extern type_t float_type, double_type, long_double_type, float128_type, wchar_type();
   type_t gen_float_type(unsigned);
   // complex types
   extern type_t complex_type(type_t);
@@ -1111,6 +1122,8 @@ namespace Absyn {
   exp_t address_exp(exp_t, seg_t);
   exp_t sizeoftype_exp(type_t t, seg_t);
   exp_t sizeofexp_exp(exp_t e, seg_t);
+  exp_t alignoftype_exp(type_t t, seg_t);
+  exp_t alignofexp_exp(exp_t e, seg_t);
   exp_t offsetof_exp(type_t, list_t<offsetof_field_t,`H>, seg_t);
   exp_t deref_exp(exp_t, seg_t);
   exp_t aggrmember_exp(exp_t, field_name_t, seg_t);

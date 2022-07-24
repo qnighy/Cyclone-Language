@@ -441,6 +441,7 @@ static void do_exp(env_t nv, exp_t e) {
     do_exp(nv,e2);
     break;
 
+  case &Alignofexp_e(e1): fallthru(e1); // no checks -- e1 is not evaluated
   case &Sizeofexp_e(e1): // no checks -- e1 is not evaluated
     e->annot = &NoCheck_val;
     do_exp(enter_sizeof(nv),e1);
@@ -473,6 +474,7 @@ static void do_exp(env_t nv, exp_t e) {
   case &Enum_e(...):
   case &AnonEnum_e(...):
   case &Sizeoftype_e(_):
+  case &Alignoftype_e(_):
   case &Offsetof_e(...): e->annot = &NoCheck_val; break;
   case &AggrMember_e(e1,...): fallthru(e1); // later do tagged-union stuff?
   case &Tagcheck_e(e1,...):   fallthru(e1); // later do tagged-union stuff?

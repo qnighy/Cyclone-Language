@@ -44,6 +44,12 @@ datacon(Attribute,No_check_memory_usage_att);
 datacon(Attribute,Pure_att);
 datacon(Attribute,Always_inline_att);
 datacon(Attribute,No_throw_att);
+datacon(Attribute,Leaf_att);
+datacon(Attribute,Malloc_att);
+datacon(Attribute,Warn_unused_result_att);
+datacon(Attribute,Returns_twice_att);
+datacon(Attribute,Indirect_return_att);
+datacon(Attribute,Nonstring_att);
 
 static attribute_t bad_attribute(seg_t loc) {
   Warn::err(loc,"unrecognized attribute");
@@ -72,7 +78,13 @@ attribute_t parse_nullary_att(seg_t loc, string_t<`H> s) {
     $("pure",&Atts::Pure_att_val),
     $("always_inline",&Atts::Always_inline_att_val),
     $("no_throw",&Atts::No_throw_att_val),
-    $("nothrow",&Atts::No_throw_att_val)
+    $("nothrow",&Atts::No_throw_att_val),
+    $("leaf",&Atts::Leaf_att_val),
+    $("malloc",&Atts::Malloc_att_val),
+    $("warn_unused_result",&Atts::Warn_unused_result_att_val),
+    $("returns_twice",&Atts::Returns_twice_att_val),
+    $("indirect_return",&Atts::Indirect_return_att_val),
+    $("nonstring",&Atts::Nonstring_att_val)
     };
   // drop the surrounding __ in s, if it's there
   if(numelts(s) > 4 && s[0]=='_' && s[1]=='_'
@@ -124,6 +136,19 @@ attribute_t parse_unary_att(seg_t sloc, string_t s, seg_t eloc, exp_t e) {
     return new Noliveunique_att(n);
   if(zstrcmp(s,"consume")==0 || zstrcmp(s,"__consume__")==0) 
     return new Consume_att(n);
+  if (zstrcmp(s,"nonnull") == 0 || zstrcmp(s,"__nonnull__") == 0)
+    return new Nonnull_att(n);
+  if (zstrcmp(s,"alloc_size") == 0 || zstrcmp(s,"__alloc_size__") == 0)
+    return new Alloc_size_att(n);
+  Warn::err(sloc,"unrecognized attribute");
+  return bad_attribute(sloc);
+}
+
+attribute_t parse_binary_att(seg_t sloc, string_t s, seg_t e1loc, exp_t e1, seg_t e2loc, exp_t e2) {
+  int n1 = exp2int(e1loc,e1);
+  int n2 = exp2int(e2loc,e2);
+  if (zstrcmp(s,"alloc_size") == 0 || zstrcmp(s,"__alloc_size__") == 0)
+    return new Alloc_size2_att(n1, n2);
   Warn::err(sloc,"unrecognized attribute");
   return bad_attribute(sloc);
 }
@@ -136,6 +161,8 @@ attribute_t parse_format_att(seg_t loc, seg_t s2loc, string_t s1, string_t s2,
     return new Format_att(Printf_ft,u1,u2);
   if (zstrcmp(s2,"scanf") == 0 || zstrcmp(s2,"__scanf__") == 0)
     return new Format_att(Scanf_ft,u1,u2);
+  if (zstrcmp(s2,"strfmon") == 0 || zstrcmp(s2,"__strfmon__") == 0)
+    return new Format_att(Strfmon_ft,u1,u2);
   Warn::err(loc,"unrecognized format type");
   return &Atts::Cdecl_att_val; // just return something
 }
@@ -320,6 +347,15 @@ static int attribute_case_number(attribute_t att) {
   case &Alias_att(...): return 25;
   case &Always_inline_att: return 26;
   case &No_throw_att: return 27;
+  case &Leaf_att: return 28;
+  case &Nonnull_att(_): return 29;
+  case &Malloc_att: return 30;
+  case &Alloc_size_att(...): return 31;
+  case &Alloc_size2_att(...): return 32;
+  case &Warn_unused_result_att: return 33;
+  case &Returns_twice_att: return 34;
+  case &Indirect_return_att: return 35;
+  case &Nonstring_att: return 36;
   }
 }
 int attribute_cmp(attribute_t att1, attribute_t att2) {

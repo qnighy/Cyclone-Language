@@ -131,6 +131,8 @@ static char cnst2char(cnst_t cnst, Lexbuf lb) {
 // bool is true when the keyword is a GCC keyword, not just a Cyclone keyword
 static $(string_t,short,bool) rw_array[] = {
   $("ALIASABLE", AQ_ALIASABLE, false),
+  $("__alignof", ALIGNOF, true),
+  $("__alignof__", ALIGNOF, true),
   $("aqual_t", AQUAL_T, false),  
   $("aquals", AQUALS, false),
   $("__attribute__", ATTRIBUTE, true),
@@ -165,6 +167,8 @@ static $(string_t,short,bool) rw_array[] = {
   $("extern", EXTERN, true),
   $("fallthru", FALLTHRU, false),
   $("float", FLOAT, true),
+  $("__float128", FLOAT128, true),
+  $("_Float128", FLOAT128, true),
   $("for", FOR, true),
   $("goto", GOTO, true),
   $("if", IF, true),

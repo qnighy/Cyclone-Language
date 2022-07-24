@@ -168,6 +168,7 @@ static $(vardecl_t,exp_t) fresh_var(env_t env, exp_t e) {
       }
       break;
     case &Sizeoftype_e(...): ism = true; break;
+    case &Alignoftype_e(...): ism = true; break;
     case &Const_e(...): ism = true; break;
     case &Pragma_e(...): ism = true; break;
     case &Instantiate_e(...): ism = true; break;
@@ -570,8 +571,11 @@ static exp_t lower_rhs(env_t env, bool effect_only, bool has_target, exp_t e) {
     break;
   case &Sizeoftype_e(t): return e;
     break;
+  case &Alignoftype_e(t): return e;
+    break;
     // FIX:  need to lower e but for now, we punt...
   case &Sizeofexp_e(...): res = e; break;
+  case &Alignofexp_e(...): res = e; break;
   case &Offsetof_e(t,fs): res = e; break;
   case &Deref_e(e1):
     res = deref_exp(lower_rhs(env,false,false,e1),e->loc); break;

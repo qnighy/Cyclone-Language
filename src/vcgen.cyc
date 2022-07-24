@@ -1337,6 +1337,8 @@ static $(term_t,assn_map_t) vcgen_rexp_inner(env_t env, exp_t e, assn_map_t amin
   case &Absyn::AnonEnum_e(...):
   case &Absyn::Sizeoftype_e(_):
   case &Absyn::Sizeofexp_e(_):
+  case &Absyn::Alignoftype_e(_):
+  case &Absyn::Alignofexp_e(_):
   case &Absyn::Valueof_e(_):
   case &Absyn::Offsetof_e(_,_): 
     let $(cn,known) = Evexp::eval_const_uint_exp(e);

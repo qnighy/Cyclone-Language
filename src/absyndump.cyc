@@ -511,7 +511,8 @@ static void dumpntyp(type_t t) {
       switch(i) {
       case 0:  dump("float");       return;
       case 1:  dump("double");      return;
-      default: dump("long double"); return;
+      case 2:  dump("long double"); return;
+      default: dump("_Float128");   return;
       }
     case &AggrCon(info):
       let $(k,n) = aggr_kinded_name(info);
@@ -797,6 +798,8 @@ static void dumpexp_prec(int inprec, exp_t e) {
     dumpexp_prec(myprec,e1);     break;
   case &Sizeoftype_e(t): dump("sizeof(");  dumptyp(t);  dump_char(')'); break;
   case &Sizeofexp_e(e1): dump("sizeof(");  dumpexp(e1); dump_char(')'); break;
+  case &Alignoftype_e(t): dump("__alignof__(");  dumptyp(t);  dump_char(')'); break;
+  case &Alignofexp_e(e1): dump("__alignof__(");  dumpexp(e1); dump_char(')'); break;
   case &Valueof_e(t):    dump("valueof("); dumptyp(t);  dump_char(')'); break;
 
   case &Extension_e(e1):

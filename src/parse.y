@@ -1167,8 +1167,8 @@ using Parse;
 
 // ANSI C (or GCC) keywords
 %token AUTO REGISTER STATIC EXTERN TYPEDEF VOID CHAR SHORT INT LONG FLOAT
-%token DOUBLE SIGNED UNSIGNED CONST VOLATILE RESTRICT
-%token STRUCT UNION CASE DEFAULT INLINE SIZEOF OFFSETOF
+%token DOUBLE FLOAT128 SIGNED UNSIGNED CONST VOLATILE RESTRICT
+%token STRUCT UNION CASE DEFAULT INLINE SIZEOF OFFSETOF ALIGNOF
 %token IF ELSE SWITCH WHILE DO FOR GOTO CONTINUE BREAK RETURN ENUM TYPEOF
 %token BUILTIN_VA_LIST EXTENSION COMPLEX
 // Cyc:  CYCLONE additional keywords
@@ -1285,6 +1285,8 @@ using Parse;
 %type <kind_t> kind
 %type <type_t> any_type_name type_var  qual_bnd_term qual_bnd_const eff_opt //rgn_opt
 %type <list_t<attribute_t,`H>> attributes_opt attributes attribute_list
+%type <string_t<`H>> asmname
+%type <string_t<`H>> strings
 %type <attribute_t> attribute
 %type <enumfield_t> enum_field
 %type <list_t<enumfield_t,`H>> enum_declaration_list
@@ -1662,10 +1664,21 @@ attribute:
 | CONST      { $$ = ^$(&Atts::Const_att_val); } // because const a keyword!
 | IDENTIFIER '(' assignment_expression ')'
              { $$ = ^$(Atts::parse_unary_att(SLOC(@1), $1, SLOC(@3), $3)); }
+| IDENTIFIER '(' assignment_expression ',' assignment_expression ')'
+             { $$ = ^$(Atts::parse_binary_att(SLOC(@1), $1, SLOC(@3), $3, SLOC(@5), $5)); }
 | IDENTIFIER '(' IDENTIFIER ',' INTEGER_CONSTANT ',' INTEGER_CONSTANT ')'
              { $$ = ^$(Atts::parse_format_att(LOC(@1,@8), SLOC(@3), $1, $3,
 					      cnst2uint(SLOC(@5),$5),
 					      cnst2uint(SLOC(@7),$7))); }
+;
+
+asmname:
+  ASM_TOK '(' strings ')' { $$ = $!3; }
+;
+
+strings:
+  STRING         { $$ = $!1; }
+| strings STRING { $$ = ^$(aprintf("%s%s", $1, $2)); }
 ;
 
 /***************************** TYPES *****************************/
@@ -1688,6 +1701,7 @@ type_specifier_notypedef:
 | LONG      { $$=^$(long_spec(SLOC(@1))); }
 | FLOAT     { $$=^$(type_spec(float_type,SLOC(@1))); }
 | DOUBLE    { $$=^$(type_spec(double_type,SLOC(@1))); }
+| FLOAT128  { $$=^$(type_spec(float128_type,SLOC(@1))); }
 | SIGNED    { $$=^$(signed_spec(SLOC(@1))); }
 | UNSIGNED  { $$=^$(unsigned_spec(SLOC(@1))); }
 | COMPLEX   { $$=^$(complex_spec(SLOC(@1))); }
@@ -2020,6 +2034,8 @@ direct_declarator:
   { $$=^$(Declarator($1.id, $1.varloc, rnew(yyr) List(rnew(yyr) Attributes_mod(SLOC(@2),$2),
                                          $1.tms)));
   }
+| direct_declarator asmname
+  { $$=$!1; }
 ;
 
 // same as direct_declarator but allows typedef names to occur as the variable
@@ -2060,6 +2076,8 @@ direct_declarator_withtypedef:
 | direct_declarator_withtypedef attributes
   { let one=$1;
     $$=^$(Declarator(one.id, one.varloc, rnew(yyr) List(rnew(yyr) Attributes_mod(SLOC(@2),$2),one.tms))); }
+| direct_declarator_withtypedef asmname
+  { $$=$!1; }
 ;
 
 /* CYC: region annotations allowed, as is zero-termination qualifier */
@@ -2541,6 +2559,8 @@ direct_abstract_declarator:
 | direct_abstract_declarator attributes
     { $$=^$(Abstractdeclarator(rnew(yyr) List(rnew(yyr) Attributes_mod(SLOC(@2),$2),$1.tms)));
     }
+| direct_abstract_declarator asmname
+    { $$=$!1; }
 ;
 
 chk_req_ens_thr:
@@ -2791,6 +2811,11 @@ unary_pattern:
     $$=^$(exp_pat(sizeoftype_exp(t,LOC(@1,@4)))); }
 | SIZEOF unary_expression
    { $$=^$(exp_pat(sizeofexp_exp($2,LOC(@1,@2)))); }
+| ALIGNOF '(' type_name ')'
+  { let t = type_name_to_type($3,SLOC(@3));
+    $$=^$(exp_pat(alignoftype_exp(t,LOC(@1,@4)))); }
+| ALIGNOF unary_expression
+   { $$=^$(exp_pat(alignofexp_exp($2,LOC(@1,@2)))); }
 | OFFSETOF '(' type_name ',' field_expression ')'
    { $$=^$(exp_pat(offsetof_exp((*$3)[2],List::imp_rev($5),LOC(@1,@6)))); }
 // disallow malloc, rmalloc, and cmalloc -- not constant expressions
@@ -3077,6 +3102,11 @@ unary_expression:
     $$=^$(sizeoftype_exp(t,LOC(@1,@4)));
   }
 | SIZEOF unary_expression        { $$=^$(sizeofexp_exp($2,LOC(@1,@2))); }
+| ALIGNOF '(' type_name ')'
+  { let t = type_name_to_type($3,SLOC(@3));
+    $$=^$(alignoftype_exp(t,LOC(@1,@4)));
+  }
+| ALIGNOF unary_expression       { $$=^$(alignofexp_exp($2,LOC(@1,@2))); }
 | OFFSETOF '(' type_name ',' field_expression ')'
    { let t = type_name_to_type($3,SLOC(@3));
      $$=^$(offsetof_exp(t,List::imp_rev($5),LOC(@1,@6)));

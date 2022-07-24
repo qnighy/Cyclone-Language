@@ -488,6 +488,8 @@ exp_t deep_copy_exp(bool preserve_types, exp_t e) {
   case &Address_e(e1):     new_e = address_exp(DC(pt,e1),e->loc);         break;
   case &Sizeoftype_e(t):   new_e = sizeoftype_exp(copy_type(t),e->loc);   break;
   case &Sizeofexp_e(e1):   new_e = sizeofexp_exp(DC(pt,e1),e->loc);       break;
+  case &Alignoftype_e(t):  new_e = alignoftype_exp(copy_type(t),e->loc);   break;
+  case &Alignofexp_e(e1):  new_e = alignofexp_exp(DC(pt,e1),e->loc);       break;
   case &Offsetof_e(t,ofs): new_e = offsetof_exp(copy_type(t),ofs,e->loc); break;
   case &Deref_e(e1):       new_e = deref_exp(DC(pt,e1),e->loc);           break;
   case &Extension_e(e1):   new_e = extension_exp(DC(pt,e1),e->loc);       break;
@@ -1442,7 +1444,8 @@ static int tycon2int(tycon_t t) {
   case &IntCon(None,LongLong_sz):     return 515;
   case &FloatCon(0):                  return 516;
   case &FloatCon(1):                  return 517;
-  case &FloatCon(_):                  return 518;
+  case &FloatCon(2):                  return 518;
+  case &FloatCon(_):                  return 519;
   default: return tagof(t);
   }
 }
@@ -1711,10 +1714,8 @@ type_t max_arithmetic_type(type_t t1, type_t t2) {
   case $(&AppType(c1,_),&AppType(c2,_)):
     switch $(c1,c2) {
     case $(&FloatCon(i1),&FloatCon(i2)):
-      if (i1!=0 && i1!=1) return t1; // t1 is long double
-      if (i2!=0 && i2!=1) return t2; // t2 is long double
-      if (i1>=i2) return t1; // t1 is double, or both are float
-      return t2;             // t2 is double and t1 is float
+      if (i1>=i2) return t1;
+      return t2;
     case $(&FloatCon(_),_): return t1;
     case $(_,&FloatCon(_)): return t2;
     case $(&IntCon(Unsigned,LongLong_sz),_):
@@ -2351,6 +2352,12 @@ exp_t rsubsexp(region_t<`r> r, list_t<$(tvar_t,type_t)@`r,`r> inst, exp_t e) {
   case &Sizeofexp_e(e1):
     let new_e1 = rsubsexp(r,inst,e1);
     return (new_e1==e1) ? e : copye(e, new Sizeofexp_e(new_e1));
+  case &Alignoftype_e(t):
+    let new_typ = rsubstitute(r,inst,t);
+    return (new_typ==t) ? e : copye(e, new Alignoftype_e(new_typ));
+  case &Alignofexp_e(e1):
+    let new_e1 = rsubsexp(r,inst,e1);
+    return (new_e1==e1) ? e : copye(e, new Alignofexp_e(new_e1));
   case &Extension_e(e1):
     let new_e1 = rsubsexp(r,inst,e1);
     return (new_e1==e1) ? e : copye(e, new Extension_e(new_e1));

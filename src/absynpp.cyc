@@ -561,6 +561,7 @@ string_t attribute2string(attribute_t a) {
   case &Destructor_att: return "destructor";
   case &No_check_memory_usage_att: return "no_check_memory_usage";
   case &Format_att(Printf_ft,n,m): return aprintf("format(printf,%u,%u)",n,m);
+  case &Format_att(Strfmon_ft,n,m):return aprintf("format(strfmon,%u,%u)",n,m);
   case &Format_att(/*Scanf_ft*/_,n,m):return aprintf("format(scanf,%u,%u)",n,m);
   case &Initializes_att(n): return aprintf("initializes(%d)",n);
   case &Noliveunique_att(n): return aprintf("noliveunique(%d)",n);
@@ -570,6 +571,15 @@ string_t attribute2string(attribute_t a) {
   case &Mode_att(s): return aprintf("__mode__(\"%s\")",s);
   case &Alias_att(s): return aprintf("alias(\"%s\")",s);
   case &No_throw_att : return "no_throw";
+  case &Leaf_att : return "__leaf__";
+  case &Nonnull_att(n): return aprintf("__nonnull__(%d)", n);
+  case &Malloc_att : return "__malloc__";
+  case &Alloc_size_att(n): return aprintf("__alloc_size__(%d)", n);
+  case &Alloc_size2_att(n1, n2): return aprintf("__alloc_size__(%d, %d)", n1, n2);
+  case &Warn_unused_result_att : return "__warn_unused_result__";
+  case &Returns_twice_att : return "__returns_twice__";
+  case &Indirect_return_att : return "__indirect_return__";
+  case &Nonstring_att : return "__nonstring__";
  }
 }
 
@@ -955,7 +965,8 @@ doc_t ntyp2doc(type_t t) {
     switch(i) {
     case 0:  return text("float");
     case 1:  return text("double");
-    default: return text("long double");
+    case 2:  return text("long double");
+    default: return text("_Float128");
     }
   case &AppType(&ComplexCon,ts): return cat(text("_Complex "),ntyp2doc(ts->hd));
   case &AppType(&AggrCon(info),ts):
@@ -1240,6 +1251,8 @@ int exp_prec(exp_t e) {
   case &Address_e(_):
   case &Sizeoftype_e(_):
   case &Sizeofexp_e(_):
+  case &Alignoftype_e(_):
+  case &Alignofexp_e(_):
   case &Valueof_e(_):
   case &Asm_e(...):
   case &Tagcheck_e(...):
@@ -1439,6 +1452,8 @@ doc_t exp2doc_prec(int inprec, exp_t e) {
     break;
   case &Sizeoftype_e(t): s = cat(text("sizeof("), typ2doc(t), text(")")); break;
   case &Sizeofexp_e(e1): s = cat(text("sizeof("),exp2doc(e1), text(")")); break;
+  case &Alignoftype_e(t): s = cat(text("__alignof__("), typ2doc(t), text(")")); break;
+  case &Alignofexp_e(e1): s = cat(text("__alignof__("),exp2doc(e1), text(")")); break;
   case &Assert_e(e,static_only,_):     
     if (static_only)
       s = cat(text("@assert("),exp2doc(e),text(")"));  

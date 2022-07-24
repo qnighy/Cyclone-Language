@@ -45,6 +45,7 @@ namespace Atts {
   // parsing: locations just in case of errors
 attribute_t parse_nullary_att(seg_t, string_t<`H>);
 attribute_t parse_unary_att(seg_t sloc, string_t s, seg_t eloc, exp_t e);
+attribute_t parse_binary_att(seg_t sloc, string_t s, seg_t e1loc, exp_t e1, seg_t e2loc, exp_t e2);
 attribute_t parse_format_att(seg_t loc, seg_t s2loc, string_t s1, string_t s2, 
 			     unsigned u1, unsigned u2);
 

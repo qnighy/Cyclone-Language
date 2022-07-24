@@ -1614,6 +1614,27 @@ static type_t tcSizeof(tenv_t te, seg_t loc, type_t * topt, type_t t) {
   }
 }
 
+ // __alignof__ t
+static type_t tcAlignof(tenv_t te, seg_t loc, type_t * topt, type_t t) {
+  // if we're inside a type-level expression that means
+  // we shouldn't check the type yet -- it will be done later
+  if (te->allow_valueof)
+    return uint_type;
+  check_type(loc,te,lookup_type_vars(te),&Kinds::mk,true,false,t);
+  check_no_qual(loc,t);
+  if(!Evexp::okay_szofarg(t))
+    Warn::err2(loc,"__alignof__ applied to type ",t," which has unknown size here");
+  if (topt==NULL)
+    return uint_type;
+  switch (compress(*topt)) {
+  case &AppType(&TagCon,&List{tt,_}):
+    if (Unify::unify(tt,new ValueofType(alignoftype_exp(t,0)))) 
+      return compress(*topt);
+    return uint_type;
+  default: return uint_type;
+  }
+}
+
 type_opt_t structfield_type(field_name_t n, aggrfield_t sf) {
   if (strcmp(*n,*sf->name) == 0) 
     return sf->type;
@@ -3012,6 +3033,8 @@ static void tcExpNoInst(tenv_t te, type_t * topt, exp_t e) {
     break;
   case &Sizeofexp_e(e1):       fallthru(tcExpNoPromote(te, NULL, e1));
   case &Sizeoftype_e(t1):      t = tcSizeof(te,loc,topt,t1); break;
+  case &Alignofexp_e(e1):      fallthru(tcExpNoPromote(te, NULL, e1));
+  case &Alignoftype_e(t1):     t = tcAlignof(te,loc,topt,t1); break;
   case &Offsetof_e(t1,l):      t = tcOffsetof(te,loc,topt,t1,l); break;
   case &Deref_e(e1):           t = tcDeref(te,loc,topt,e,e1); break;
   case &AggrMember_e(e1,f,*is_tagged,*is_read):

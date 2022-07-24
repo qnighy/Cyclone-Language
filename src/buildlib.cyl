@@ -892,6 +892,8 @@ and block_comment = parse /* returns 1 if more to do, 0 if all done */
       fallthru(e1);
     case &Sizeofexp_e(e1):
       fallthru(e1);
+    case &Alignofexp_e(e1):
+      fallthru(e1);
     case &Address_e(e1):
       fallthru(e1);
     case &Increment_e(e1,_):
@@ -926,6 +928,7 @@ and block_comment = parse /* returns 1 if more to do, 0 if all done */
     case &Tagcheck_e(e,_):
       scan_exp(e,dep); return;
     case &Valueof_e(t1): fallthru(t1);
+    case &Alignoftype_e(t1): fallthru(t1);
     case &Sizeoftype_e(t1):
       scan_type(t1,dep);
       return;

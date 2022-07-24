@@ -215,6 +215,7 @@ static void rgnsubexp(struct rgnsubenv env, exp_t e) {
   case &Var_e(...): break;
 
   case &Offsetof_e(*t,f): fallthru(t);
+  case &Alignoftype_e(*t): fallthru(t);
   case &Sizeoftype_e(*t): 
     rgnsubtype(e->loc,env,*t);
     if (!env.toplevel)
@@ -254,6 +255,7 @@ static void rgnsubexp(struct rgnsubenv env, exp_t e) {
   case &Deref_e(e1):          fallthru(e1);
   case &Address_e(e1):        fallthru(e1);
   case &Sizeofexp_e(e1):      fallthru(e1);
+  case &Alignofexp_e(e1):     fallthru(e1);
   case &Extension_e(e1):      fallthru(e1);
   case &Throw_e(e1,_):        fallthru(e1);
   case &NoInstantiate_e(e1): rgnsubexp(env,e1); break;

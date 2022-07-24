@@ -1410,6 +1410,8 @@ static ctype_t gen_exp(bool takeaddress,cenv_t env, exp_t e) {
   case &Const_e({.LongLong_c = $(_,_)}):
   case &Sizeoftype_e(_):
   case &Sizeofexp_e(_):
+  case &Alignoftype_e(_):
+  case &Alignofexp_e(_):
   case &Offsetof_e(_,_):
   case &Enum_e(...):
   case &AnonEnum_e(...):

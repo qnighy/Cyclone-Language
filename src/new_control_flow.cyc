@@ -910,6 +910,8 @@ static $(flow_t,absRval_t) anal_Rexp(analenv_t env, bool copy_ctxt,
   case &Assert_false_e(_):
   case &Sizeofexp_e(_): // note: the exp is NOT evaluated
   case &Sizeoftype_e(_):
+  case &Alignofexp_e(_): // note: the exp is NOT evaluated
+  case &Alignoftype_e(_):
   case &Offsetof_e(_,_): // FIX: ?? (first field guaranteed zero?)
   case &AnonEnum_e(...): // FIX : distinguish tags that are/aren't 0
   case &Enum_e(...): return $(inflow, fenv->unknown_all);

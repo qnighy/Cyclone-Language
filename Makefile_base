@@ -169,7 +169,7 @@ endif
 STUBS_FILES = bin/cyc-lib/libc.cys bin/buildlib$(EXE) $(BL)/cyc-lib/$(build)/cycspecs
 TARGET_STUBS_FILES = bin/cyc-lib/libc.cys bin/buildlib$(EXE) $(BL)/cyc-lib/$(target)/cycspecs
 define CREATE_STUBS
-bin/buildlib $(BUILDLIBFLAGS) -Bbin/lib/cyc-lib -d $(@D) $< -std=gnu99 -D__GNUC__=0
+bin/buildlib $(BUILDLIBFLAGS) -Bbin/lib/cyc-lib -d $(@D) $<
 endef
 define TARGET_CREATE_STUBS
 bin/buildlib $(BTARGET) $(BUILDLIBFLAGS) -Bbin/lib/cyc-lib -d $(@D) $<
