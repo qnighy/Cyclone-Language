@@ -232,7 +232,7 @@ static result_t remove_aggrs_exp(env_t env, exp_t e) {
       let &$(_,field_exp) = dles2->hd;
       let fielddest = set_type(subscript_exp(deep_copy(dest),
                                              set_type(signed_int_exp(i,DL),
-                                                      sint_type),DL),
+                                                      slong_type),DL),
                                dest_type);
       remove_aggrs_exp(Env(AggrField,fielddest),field_exp);
     }
@@ -256,18 +256,18 @@ static result_t remove_aggrs_exp(env_t env, exp_t e) {
     }
     qvar_t max  = Toc::temp_var();
     qvar_t i    = vd->name;
-    exp_t  ea   = assign_exp(set_type(var_exp(i,DL),sint_type),
-                             set_type(signed_int_exp(0,DL),sint_type),DL);
-    exp_t  eb   = lt_exp(set_type(var_exp(i,DL),uint_type),
-                         set_type(var_exp(max,DL),uint_type),DL);
-    exp_t  ec   = increment_exp(set_type(var_exp(i,DL),uint_type),PreInc,DL);
+    exp_t  ea   = assign_exp(set_type(var_exp(i,DL),slong_type),
+                             set_type(signed_int_exp(0,DL),slong_type),DL);
+    exp_t  eb   = lt_exp(set_type(var_exp(i,DL),ulong_type),
+                         set_type(var_exp(max,DL),ulong_type),DL);
+    exp_t  ec   = increment_exp(set_type(var_exp(i,DL),ulong_type),PreInc,DL);
     exp_t dest  = (exp_t)env.dest;
     type_t dest_type;
     switch (compress((type_t)dest->topt)) {
     case &ArrayType(ai): dest_type = cstar_type(ai.elt_type,ai.tq); break;
     default: dest_type = (type_t)dest->topt;
     }
-    exp_t  lval = subscript_exp((exp_t)env.dest,set_type(var_exp(i,DL),uint_type),DL);
+    exp_t  lval = subscript_exp((exp_t)env.dest,set_type(var_exp(i,DL),ulong_type),DL);
     set_type(lval,dest_type);
     remove_aggrs_exp(Env(AggrField,deep_copy(lval)),body);
     stmt_t s = for_stmt(ea,eb,ec,exp_stmt(body,DL),DL);
@@ -279,16 +279,16 @@ static result_t remove_aggrs_exp(env_t env, exp_t e) {
       // occurrence of lhs above.
       // FIX: I removed a cast of the 0 -- may lead to gcc warnings
       exp_t ex = assign_exp(subscript_exp(deep_copy((exp_t)env.dest),
-					  set_type(var_exp(max,DL),sint_type),DL),
+					  set_type(var_exp(max,DL),slong_type),DL),
                             set_type(signed_int_exp(0,DL),sint_type),DL);
       s = seq_stmt(s,exp_stmt(ex,DL),DL);
     }
     // Note the generated code for an initializer is a bit uglier than necessary
     noarray_remove_aggrs_exp(other_env,bd);
-    e->r = stmt_exp(seq_stmt(declare_stmt(max,uint_type,bd,
-			     declare_stmt(i,uint_type,NULL,s,DL),DL),
-			     exp_stmt(set_type(signed_int_exp(0,DL),sint_type),DL),DL),DL)->r;
-    e->topt = sint_type;
+    e->r = stmt_exp(seq_stmt(declare_stmt(max,ulong_type,bd,
+			     declare_stmt(i,ulong_type,NULL,s,DL),DL),
+			     exp_stmt(set_type(signed_int_exp(0,DL),slong_type),DL),DL),DL)->r;
+    e->topt = slong_type;
     break;
 
   case &ComprehensionNoinit_e(bd,...): 

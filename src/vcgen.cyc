@@ -580,7 +580,7 @@ static void insert_exp_checks(assn_info_t assn_info, Absyn::exp_t e, exp_checks_
 
 static exp_t zero_exp() {
   exp_t ans = Absyn::uint_exp(0,0);
-  ans->topt = Absyn::uint_type;
+  ans->topt = Absyn::ulong_type;
   return ans;
 }
 
@@ -685,7 +685,7 @@ static $(term_t res, assn_map_t amout)
     let $(_,ambody) = vcgen_rexp(env,e2,amt);
     // increment vd
     let $(v2,am2) = lookup_var_map(vd,ambody);
-    ambody = do_assign(env,am2,myaddr(env,vd),plus(v2,one(),Absyn::uint_type));
+    ambody = do_assign(env,am2,myaddr(env,vd),plus(v2,one(),Absyn::ulong_type));
     ambody = canonical_assnmap(ambody);
     //fprintf(stderr,"after body %s\n",assnmap2string(ambody));
     let $(a1,a2,map) = unify_var_maps_subst(amin,ambody);
@@ -719,7 +719,7 @@ static $(term_t,assn_map_t) vcgen_binop(env_t env, type_opt_t tp_opt,
         update_try_assnmap(env,am,fresh_var(NULL,Absyn::exn_type()));
       return $(offseti(t1,t2,tp),am);
     case Absyn::Minus:
-      return $(offseti(t1,unop(Absyn::Minus,t2,Absyn::sint_type),tp),am);
+      return $(offseti(t1,unop(Absyn::Minus,t2,Absyn::slong_type),tp),am);
     default:
       Warn::impos("vcgen: result has pointer type but uses bad primop");
     }
@@ -728,7 +728,7 @@ static $(term_t,assn_map_t) vcgen_binop(env_t env, type_opt_t tp_opt,
   let t = binop(p,t1,t2,tp);
   // if the expression has type unsigned, then we may
   // conclude t == t1%t2 u< t2;
-  if (!env->pure_exp && p == Absyn::UMod && Unify::unify(Absyn::uint_type,tp))
+  if (!env->pure_exp && p == Absyn::UMod && (Unify::unify(Absyn::uint_type,tp) || Unify::unify(Absyn::ulong_type,tp)))
     am = and_assnmap_assn(am,ult(t,t2));
   return $(t,am);
 }

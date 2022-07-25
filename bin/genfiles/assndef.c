@@ -381,9 +381,9 @@ struct Cyc_Absyn_Tqual Cyc_Absyn_empty_tqual(unsigned);
 # 953
 void*Cyc_Absyn_compress(void*);
 # 971
-extern void*Cyc_Absyn_uint_type;
+extern void*Cyc_Absyn_uint_type;extern void*Cyc_Absyn_ulong_type;
 # 973
-extern void*Cyc_Absyn_sint_type;
+extern void*Cyc_Absyn_slong_type;
 # 980
 extern void*Cyc_Absyn_heap_rgn_type;
 # 982
@@ -867,9 +867,9 @@ return _TB;}}
 # 484
 _TL7C: _TC=resopt;_TD=*_TC;_TE=_TD->term;return _TE;}}
 # 487
-static void**Cyc_AssnDef_lookup_term_opt(struct Cyc_Hashtable_Table*h,void*t){struct Cyc_Hashtable_Table*_T0;struct _fat_ptr _T1;unsigned char*_T2;struct Cyc_Hashtable_Bucket*_T3;struct Cyc_Hashtable_Bucket*_T4;int _T5;unsigned _T6;struct _fat_ptr _T7;unsigned _T8;unsigned _T9;int _TA;struct Cyc_Hashtable_Bucket _TB;struct Cyc_Hashtable_Cell*_TC;void*_TD;void*_TE;int _TF;struct Cyc_Hashtable_Cell*_T10;void**_T11;struct Cyc_Hashtable_Cell*_T12;_T0=h;{
+static void**Cyc_AssnDef_lookup_term_opt(struct Cyc_Hashtable_Table*h,void*t){struct Cyc_Hashtable_Table*_T0;struct _fat_ptr _T1;unsigned char*_T2;struct Cyc_Hashtable_Bucket*_T3;struct Cyc_Hashtable_Bucket*_T4;int _T5;unsigned long _T6;struct _fat_ptr _T7;unsigned long _T8;unsigned long _T9;int _TA;struct Cyc_Hashtable_Bucket _TB;struct Cyc_Hashtable_Cell*_TC;void*_TD;void*_TE;int _TF;struct Cyc_Hashtable_Cell*_T10;void**_T11;struct Cyc_Hashtable_Cell*_T12;_T0=h;{
 struct _fat_ptr tab=_T0->tab;_T1=tab;_T2=_T1.curr;_T3=(struct Cyc_Hashtable_Bucket*)_T2;_T4=
-_check_null(_T3);_T5=Cyc_AssnDef_termhash(t);_T6=(unsigned)_T5;_T7=tab;_T8=_get_fat_size(_T7,sizeof(struct Cyc_Hashtable_Bucket));_T9=_T6 % _T8;_TA=(int)_T9;_TB=_T4[_TA];{struct Cyc_Hashtable_Cell*p=_TB.cells;
+_check_null(_T3);_T5=Cyc_AssnDef_termhash(t);_T6=(unsigned long)_T5;_T7=tab;_T8=_get_fat_size(_T7,sizeof(struct Cyc_Hashtable_Bucket));_T9=_T6 % _T8;_TA=(int)_T9;_TB=_T4[_TA];{struct Cyc_Hashtable_Cell*p=_TB.cells;
 _TL81: if(p!=0)goto _TL7F;else{goto _TL80;}
 _TL7F: _TC=p;_TD=_TC->key;_TE=t;_TF=Cyc_AssnDef_termcmp(_TD,_TE);if(_TF!=0)goto _TL82;_T10=p;_T11=& _T10->value;return _T11;_TL82: _T12=p;
 # 490
@@ -942,9 +942,9 @@ if(!_T0)goto _TL8B;_T1=Cyc_AssnDef_uint(c);return _T1;_TL8B:{struct Cyc_AssnDef_
 _TA.f1=e;_T2=_TA;}{struct Cyc_AssnDef_Const_AssnDef_Term_struct t=_T2;_T3=& t;_T4=(struct Cyc_AssnDef_Const_AssnDef_Term_struct*)_T3;_T5=(void*)_T4;_T6=
 Cyc_AssnDef_hash_cons_term(_T5);return _T6;}}}
 # 588
-void*Cyc_AssnDef_addr(struct Cyc_Absyn_Vardecl*vd,void*invok){struct Cyc_Absyn_Vardecl*_T0;int*_T1;int _T2;void*_T3;struct Cyc_Absyn_Vardecl*_T4;void*_T5;unsigned _T6;struct Cyc_Absyn_Vardecl*_T7;void*_T8;void*_T9;void*_TA;struct Cyc_Absyn_Tqual _TB;void*_TC;void*_TD;struct Cyc_AssnDef_Addr_AssnDef_Term_struct _TE;struct Cyc_AssnDef_Addr_AssnDef_Term_struct*_TF;struct Cyc_AssnDef_Addr_AssnDef_Term_struct*_T10;void*_T11;void*_T12;_T0=vd;{
+void*Cyc_AssnDef_addr(struct Cyc_Absyn_Vardecl*vd,void*invok){struct Cyc_Absyn_Vardecl*_T0;int*_T1;int _T2;void*_T3;struct Cyc_Absyn_Vardecl*_T4;void*_T5;unsigned long _T6;struct Cyc_Absyn_Vardecl*_T7;void*_T8;void*_T9;void*_TA;struct Cyc_Absyn_Tqual _TB;void*_TC;void*_TD;struct Cyc_AssnDef_Addr_AssnDef_Term_struct _TE;struct Cyc_AssnDef_Addr_AssnDef_Term_struct*_TF;struct Cyc_AssnDef_Addr_AssnDef_Term_struct*_T10;void*_T11;void*_T12;_T0=vd;{
 void*tp=_T0->type;{
-void*_T13=Cyc_Absyn_compress(tp);_T1=(int*)_T13;_T2=*_T1;if(_T2!=5)goto _TL8D;goto _LL0;_TL8D: _T4=vd;_T5=_T4->rgn;_T6=(unsigned)_T5;
+void*_T13=Cyc_Absyn_compress(tp);_T1=(int*)_T13;_T2=*_T1;if(_T2!=5)goto _TL8D;goto _LL0;_TL8D: _T4=vd;_T5=_T4->rgn;_T6=(unsigned long)_T5;
 # 593
 if(!_T6)goto _TL8F;_T7=vd;_T3=_T7->rgn;goto _TL90;_TL8F: _T3=Cyc_Absyn_heap_rgn_type;_TL90:{void*rgn=_T3;_T8=tp;_T9=rgn;_TA=Cyc_Absyn_al_qual_type;_TB=
 Cyc_Absyn_empty_tqual(0U);_TC=Cyc_Absyn_false_type;_TD=Cyc_Absyn_false_type;tp=Cyc_Absyn_at_type(_T8,_T9,_TA,_TB,_TC,_TD);}_LL0:;}{struct Cyc_AssnDef_Addr_AssnDef_Term_struct _T13;_T13.tag=11;
@@ -1243,7 +1243,7 @@ _T1C.f0=tm;_T1C.f1=i;_T0=_T1C;}{struct _tuple15 _T1C=_T0;void*_T1D;void*_T1E;voi
 return _T7;_TL165: _T8=_T1C.f0;_T9=(int*)_T8;_TA=*_T9;if(_TA!=14)goto _TL167;goto _LL3;_TL167: goto _LL5;_TL163: _TB=_T1C.f0;_TC=(int*)_TB;_TD=*_TC;if(_TD!=14)goto _TL169;_LL3: _TE=_T1C.f0;{struct Cyc_AssnDef_Offseti_AssnDef_Term_struct*_T20=(struct Cyc_AssnDef_Offseti_AssnDef_Term_struct*)_TE;_TF=_T20->f1;_T1F=(void*)_TF;_T10=_T20->f2;_T1E=(void*)_T10;_T11=_T20->f3;_T1D=(void*)_T11;}{void*t=_T1F;void*j=_T1E;void*tp2=_T1D;
 # 993
 if(tp==0)goto _TL16B;if(tp2==0)goto _TL16B;_T12=Cyc_Unify_unify(tp,tp2);if(!_T12)goto _TL16B;_T13=t;_T14=
-Cyc_AssnDef_plus(i,j,Cyc_Absyn_sint_type);_T15=tp;_T16=Cyc_AssnDef_offseti(_T13,_T14,_T15);return _T16;_TL16B: goto _LL6;}_TL169: _LL5: _LL6:{struct Cyc_AssnDef_Offseti_AssnDef_Term_struct _T20;_T20.tag=14;
+Cyc_AssnDef_plus(i,j,Cyc_Absyn_slong_type);_T15=tp;_T16=Cyc_AssnDef_offseti(_T13,_T14,_T15);return _T16;_TL16B: goto _LL6;}_TL169: _LL5: _LL6:{struct Cyc_AssnDef_Offseti_AssnDef_Term_struct _T20;_T20.tag=14;
 # 997
 _T20.f1=tm;_T20.f2=i;_T20.f3=tp;_T17=_T20;}{struct Cyc_AssnDef_Offseti_AssnDef_Term_struct t=_T17;_T18=& t;_T19=(struct Cyc_AssnDef_Offseti_AssnDef_Term_struct*)_T18;_T1A=(void*)_T19;_T1B=
 Cyc_AssnDef_hash_cons_term(_T1A);return _T1B;};}}
@@ -1269,7 +1269,7 @@ _TF.f1=p;_TF.f2=t;_TF.f3=tp;_TA=_TF;}{struct Cyc_AssnDef_Unop_AssnDef_Term_struc
 Cyc_AssnDef_hash_cons_term(_TD);return _TE;}}
 # 1024
 void*Cyc_AssnDef_numelts_term(void*t){void*_T0;_T0=
-Cyc_AssnDef_unop(18U,t,Cyc_Absyn_uint_type);return _T0;}static char _TmpG3[5U]="#Mem";
+Cyc_AssnDef_unop(18U,t,Cyc_Absyn_ulong_type);return _T0;}static char _TmpG3[5U]="#Mem";
 # 1030
 static struct _fat_ptr Cyc_AssnDef_memory_var={(unsigned char*)_TmpG3,(unsigned char*)_TmpG3,(unsigned char*)_TmpG3 + 5U};static char _TmpG4[9U]="#Pre_Mem";
 static struct _fat_ptr Cyc_AssnDef_pre_memory_var={(unsigned char*)_TmpG4,(unsigned char*)_TmpG4,(unsigned char*)_TmpG4 + 9U};

@@ -681,7 +681,7 @@ void*Cyc_Set_choose(struct Cyc_Set_Set*s){struct Cyc_Set_Set*_T0;struct Cyc_List
 if(_T1!=0)goto _TL86;_T2=& Cyc_Set_Absent_val;_T3=(struct Cyc_Set_Absent_exn_struct*)_T2;_throw(_T3);goto _TL87;_TL86: _TL87: _T4=s;_T5=_T4->nodes;_T6=_T5->hd;
 return _T6;}
 # 398
-int Cyc_Set_iter_f(struct Cyc_List_List**elts_left,void**dest){struct Cyc_List_List**_T0;struct Cyc_List_List*_T1;unsigned _T2;void**_T3;struct Cyc_List_List**_T4;struct Cyc_List_List*_T5;struct Cyc_List_List**_T6;struct Cyc_List_List**_T7;struct Cyc_List_List*_T8;struct Cyc_List_List*_T9;_T0=elts_left;_T1=*_T0;_T2=(unsigned)_T1;
+int Cyc_Set_iter_f(struct Cyc_List_List**elts_left,void**dest){struct Cyc_List_List**_T0;struct Cyc_List_List*_T1;unsigned long _T2;void**_T3;struct Cyc_List_List**_T4;struct Cyc_List_List*_T5;struct Cyc_List_List**_T6;struct Cyc_List_List**_T7;struct Cyc_List_List*_T8;struct Cyc_List_List*_T9;_T0=elts_left;_T1=*_T0;_T2=(unsigned long)_T1;
 if(_T2)goto _TL88;else{goto _TL8A;}
 _TL8A: return 0;_TL88: _T3=dest;_T4=elts_left;_T5=*_T4;
 *_T3=_T5->hd;_T6=elts_left;_T7=elts_left;_T8=*_T7;_T9=

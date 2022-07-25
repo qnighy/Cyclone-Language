@@ -303,12 +303,12 @@ static type_t rgn_type() {
   return (type_t)r;
 }
 static type_t aqualt_type() {
-  return uint_type;
+  return ulong_type;
 }
 static exp_t aliasable_qual_exp() {
   static exp_opt_t aq = NULL;
   if(aq == NULL)
-    aq = set_type(uint_exp(0, 0), uint_type);
+    aq = set_type(uint_exp(0, 0), ulong_type);
   return aq;
 }
 static stmt_t skip_stmt_dl() {
@@ -410,7 +410,7 @@ static bool isCharStar(exp_t e) {
   }
 }
 
-#define sizeoftype_exp(e,i) (set_type(sizeoftype_exp(e,i),uint_type))
+#define sizeoftype_exp(e,i) (set_type(sizeoftype_exp(e,i),ulong_type))
 
 ///////////////////////////// Various Utilities /////////////////////////////
 
@@ -616,7 +616,7 @@ add_struct_type_body<`r2,`r3,`d,`r>(region_t<`d> d,
     // a zero-sized array of void*'s and force it to be aligned.
     if (Unify::unify(t,void_type))
       t = new ArrayType(ArrayInfo(void_star_type(), mt_tq,
-                                  set_type(uint_exp(0,DL), uint_type),
+                                  set_type(uint_exp(0,DL), ulong_type),
                                   false_type, DL));
     fs = new List(new Aggrfield{f->name,mt_tq,t,f->width,atts,NULL},fs);
   }
@@ -1194,7 +1194,7 @@ static enum PTR_ANS ptr_use_to_c(env_t nv, exp_t ptr, absyn_annot_t annot,
       // ((ta1 *)_check_fat_subscript(e1, sizeof(ta1), ind))
       type_t ta1 = typ_to_c(ta);
       type_t newt = cstar_type(ta1,tq);
-      exp_t  ind = index ? index : set_type(uint_exp(0,DL),uint_type);
+      exp_t  ind = index ? index : set_type(uint_exp(0,DL),ulong_type);
       ptr->r = cast_it_r(newt, 
                          set_type(fncall_exp_dl(_check_fat_subscript_e,
                                                 deep_copy(ptr),
@@ -1208,7 +1208,7 @@ static enum PTR_ANS ptr_use_to_c(env_t nv, exp_t ptr, absyn_annot_t annot,
       fallthru(bd);
     case &InsertChecks::ThinBound(bd):
       type_t ta1 = typ_to_c(ta);
-      exp_t  ind = index ? index : set_type(uint_exp(0,DL),uint_type);
+      exp_t  ind = index ? index : set_type(uint_exp(0,DL),ulong_type);
 
       // requiring the bound to be 1 is a hack, but avoids strange
       // performance degradation (surprising searches for 0)
@@ -1225,7 +1225,7 @@ static enum PTR_ANS ptr_use_to_c(env_t nv, exp_t ptr, absyn_annot_t annot,
                                                     bd, 
                                                     set_type(times_exp((exp_t)ainfo.num_elts,
                                                                        sizeoftype_exp(ainfo.elt_type,DL),
-                                                                       0),uint_type), 
+                                                                       0),ulong_type), 
                                                     ind),cstar_type(char_type,tq)));
           ans = DROP_SUBSCRIPT;
           break;
@@ -1283,11 +1283,11 @@ static exp_opt_t array_length_exp(exp_t e) {
     for(let dles2=dles; dles2 != NULL; dles2 = dles2->tl)
       if((*dles2->hd)[0] != NULL) // sanity check
 	unimp("array designators for abstract-field initialization");
-    fallthru(set_type(signed_int_exp(length(dles),DL),sint_type),false);
+    fallthru(set_type(signed_int_exp(length(dles),DL),slong_type),false);
   case &Comprehension_e(_,bd,_,zt): fallthru(bd,zt);
   case &ComprehensionNoinit_e(bd,_,zt):
     bd = deep_copy(bd);
-    return zt ? set_type(add_exp(bd,set_type(uint_exp(1,DL),uint_type),DL),uint_type) : bd;
+    return zt ? set_type(add_exp(bd,set_type(uint_exp(1,DL),ulong_type),DL),ulong_type) : bd;
   default: return NULL;
   }
 }
@@ -1344,9 +1344,9 @@ static exp_opt_t get_varsizeexp(exp_t e) {
           set_type(add_exp(set_type(fncall_exp_dl(_check_times_e,
                                                   (exp_t)array_length_exp(e2),
                                                   sizeoftype_exp(elt_type,DL)),
-                                    uint_type),
-                           set_type(signed_int_exp(PAD_BYTES,DL),sint_type),
-                           DL),uint_type);
+                                    ulong_type),
+                           set_type(signed_int_exp(PAD_BYTES,DL),slong_type),
+                           DL),ulong_type);
       default: return NULL;
       }
     }
@@ -1540,10 +1540,10 @@ static void zero_ptr_assign_to_c(env_t nv, exp_t e,
     // build numelts(x) == 1 directly (no translation)
     let xsizeargs = list(set_type(varb_exp(x_bnd,DL),c_fat_ptr_type),
                          sizeoftype_exp(typ_to_c(elt_type),DL));
-    let oneexp = set_type(uint_exp(1,DL),uint_type);
+    let oneexp = set_type(uint_exp(1,DL),ulong_type);
     exp_t xsize;
     xsize = prim2_exp(Eq,set_type(fncall_exp(_get_fat_size_e,xsizeargs,DL),
-                                  uint_type),oneexp,DL);
+                                  ulong_type),oneexp,DL);
     // start assembling the statement
     let comp_exp = and_exp(xsize,and_exp(comp1_exp,comp2_exp,DL),DL);
     let thr_stmt = exp_stmt(set_type(fncall_exp_dl(_throw_arraybounds_e),void_star_type()),DL);
@@ -1584,7 +1584,7 @@ static raw_exp_t check_tagged_union(type_t res_type,
   }
   let strct_name = tagged_union_field_struct(aggrtype,f);
   let $(temp,temp_exp) = temp_var_and_exp();
-  let f_tag = set_type(signed_int_exp(get_member_offset(ad,f),DL),uint_type);
+  let f_tag = set_type(signed_int_exp(get_member_offset(ad,f),DL),ulong_type);
   if (in_lhs) {
     let e1_p_type = cstar_type(e1_c_type,mt_tq);
     set_type(temp_exp,e1_p_type);
@@ -1759,7 +1759,7 @@ static void exp_to_c(env_t nv, exp_t e) {
 	  if (!Evexp::c_can_eval(eopt))
 	    Warn::err2(e->loc,"can't calculate numelts");
 	  // careful! when this is a nullable pointer, the size might be 0
-	  e->r = conditional_exp_r(arg,eopt,set_type(uint_exp(0,DL),uint_type));
+	  e->r = conditional_exp_r(arg,eopt,set_type(uint_exp(0,DL),ulong_type));
 	} else
 	  e->r = eopt->r; // compile-time evaluation
 	break;
@@ -1810,7 +1810,7 @@ static void exp_to_c(env_t nv, exp_t e) {
 	} else
 	  e->r = fncall_exp_r(_fat_ptr_plus_e,
 			      e1,sizeoftype_exp(typ_to_c(elt_type),DL),
-			      set_type(prim1_exp(Minus,e2,DL),sint_type));
+			      set_type(prim1_exp(Minus,e2,DL),slong_type));
       }
       break;
     case Eq: case Neq: 
@@ -1882,7 +1882,7 @@ static void exp_to_c(env_t nv, exp_t e) {
         change = -1;
       e->r = fncall_exp_r(fn_e, push_address_exp(e2),
 			  sizeoftype_exp(typ_to_c(elt_typ),DL),
-			  set_type(signed_int_exp(change,DL),sint_type));
+			  set_type(signed_int_exp(change,DL),slong_type));
     } else if (is_zero_pointer_type_elt(old_typ,&elt_typ)) {
       // we treat ++x specially -- this becomes
       //   if (x != 0 && *x != 0) ++x; else _throw_arraybounds()
@@ -1897,11 +1897,11 @@ static void exp_to_c(env_t nv, exp_t e) {
         let xe = set_type(var_exp(x,DL),t);
         let deref_x = set_type(deref_exp(xe,DL),et);
         let xexp = push_address_exp(e2);
-        let test_left = set_type(deref_exp(deref_x,DL),sint_type);
-        let testexp = neq_exp(test_left,set_type(int_exp(None,0,DL),sint_type),DL);
+        let test_left = set_type(deref_exp(deref_x,DL),slong_type);
+        let testexp = neq_exp(test_left,set_type(int_exp(None,0,DL),slong_type),DL);
         if (do_null_check(e))
           testexp = and_exp(neq_exp(deep_copy(deref_x),
-                                    set_type(int_exp(None,0,DL),sint_type),DL),
+                                    set_type(int_exp(None,0,DL),slong_type),DL),
                             testexp,DL);
         let s = ifthenelse_stmt(testexp,
               exp_stmt(increment_exp(deep_copy(deref_x),PreInc,DL),DL),
@@ -1914,13 +1914,13 @@ static void exp_to_c(env_t nv, exp_t e) {
 	if(isCharStar(e2))
 	  e->r = fncall_exp_r(_zero_arr_inplace_plus_post_char_e,
 			      push_address_exp(e2),
-                              set_type(signed_int_exp(1,DL),sint_type));
+                              set_type(signed_int_exp(1,DL),slong_type));
 	else
 	  e->r = cast_it_r(typ_to_c(e2_cyc_typ),
 			   fncall_exp_dl(_zero_arr_inplace_plus_post_other_e,
 					 sizeoftype_exp(pointer_elt_type(typ_to_c(e2_cyc_typ)),DL),
 					 push_address_exp(e2),
-					 set_type(signed_int_exp(1,DL),sint_type)));
+					 set_type(signed_int_exp(1,DL),slong_type)));
       }
     } else if(elt_typ == void_type && !is_lvalue(e2)) {
       lvalue_assign(e2,NULL,incr_lvalue,incr);
@@ -1980,7 +1980,7 @@ static void exp_to_c(env_t nv, exp_t e) {
         _ change;
         switch(popt->v) {
         case Plus:  change = e2; break;
-        case Minus: change = set_type(prim1_exp(Minus,e2,DL),sint_type); break;
+        case Minus: change = set_type(prim1_exp(Minus,e2,DL),slong_type); break;
         default:    toc_impos("bad t ? pointer arithmetic");
         }
         done = true;
@@ -2053,7 +2053,7 @@ static void exp_to_c(env_t nv, exp_t e) {
     // e1(es[0], ..., es[n-num_varargs], tag_fat(argv, sizeof(t), num_varargs));
     TOC_RGN(nv,r) {
       let $(argv,argvexp) = temp_var_and_exp();
-      exp_t  num_varargs_exp = set_type(signed_int_exp(num_varargs,DL),sint_type);
+      exp_t  num_varargs_exp = set_type(signed_int_exp(num_varargs,DL),slong_type);
       type_t cva_type = typ_to_c(vai->type);
       type_t arr_type = array_type(cva_type,mt_tq,num_varargs_exp,false_type,
                                   DL);
@@ -2071,8 +2071,8 @@ static void exp_to_c(env_t nv, exp_t e) {
                                                  set_type(
                                                  (num_varargs==0?
                                                   uint_exp(0,DL):argvexp),
-                                                 uint_type),
-                                                 set_type(sizeoftype_exp(cva_type,DL),uint_type),
+                                                 ulong_type),
+                                                 set_type(sizeoftype_exp(cva_type,DL),ulong_type),
                                                  num_varargs_exp),fat_ptr_type()),
 			  new_args);
       new_args = imp_rev(new_args);
@@ -2231,7 +2231,7 @@ static void exp_to_c(env_t nv, exp_t e) {
 	  // If p2 is not zero-terminated and not const, then we subtract
 	  // one from the size so that no one can write the last location.
           if (zt1 && !p2.elt_tq.real_const && !zt2)
-            e2 = set_type(prim2_exp(Minus,e2,set_type(uint_exp(1,DL),uint_type),DL),(type_t)e2->topt);
+            e2 = set_type(prim2_exp(Minus,e2,set_type(uint_exp(1,DL),ulong_type),DL),(type_t)e2->topt);
 	  e->r = make_toplevel_dyn_arr(old_t2,e2,e1)->r;
 	} else if(zt1) {
 	  // cast from t*{n} or t@{n} to t? or t?
@@ -2263,17 +2263,17 @@ static void exp_to_c(env_t nv, exp_t e) {
 	      arg3 = fncall_exp_dl(_get_zero_arr_size_char_e,x_exp,e2);
 	    else
 	      arg3 = fncall_exp_dl(_get_zero_arr_size_other_e,
-				   set_type(sizeoftype_exp(pointer_elt_type(typ_to_c(old_t2)),DL),uint_type),
+				   set_type(sizeoftype_exp(pointer_elt_type(typ_to_c(old_t2)),DL),ulong_type),
 				   x_exp,e2);
-            arg3->topt = uint_type;
+            arg3->topt = ulong_type;
 	    break;
 	  }
 	  // If p2 is not zero-terminated and not const, then we subtract
 	  // one from the size so that no one can write the last location.
 	  bool use_temp = (arg3!=e2);
 	  if (!zt2 && !p2.elt_tq.real_const)
-	    arg3 = set_type(prim2_exp(Minus,arg3,set_type(uint_exp(1,DL),uint_type),DL),(type_t)arg3->topt);
-	  let arg2 = set_type(sizeoftype_exp(typ_to_c(p1.elt_type),DL),uint_type);
+	    arg3 = set_type(prim2_exp(Minus,arg3,set_type(uint_exp(1,DL),ulong_type),DL),(type_t)arg3->topt);
+	  let arg2 = set_type(sizeoftype_exp(typ_to_c(p1.elt_type),DL),ulong_type);
 	  if(use_temp) {
 	    let tg_exp = fncall_exp_dl(_tag_fat_e,x_exp,arg2,arg3);
             tg_exp->topt = fat_ptr_type();
@@ -2285,7 +2285,7 @@ static void exp_to_c(env_t nv, exp_t e) {
 	} else
 	  // build the t ? struct
 	  e->r = fncall_exp_r(_tag_fat_e, e1,
-			      set_type(sizeoftype_exp(typ_to_c(p1.elt_type),DL),uint_type), e2);
+			      set_type(sizeoftype_exp(typ_to_c(p1.elt_type),DL),ulong_type), e2);
 	break;
       case $(NULL, &_): //InsertChecks ensures not-at-toplevel and b2 is known
         // When we have t?ZEROTERM and are casting to
@@ -2298,7 +2298,7 @@ static void exp_to_c(env_t nv, exp_t e) {
         // that the size is at least 2+1=3.
         let new_e2 = (exp_t)b2;
         if (zt1 && !zt2)
-          new_e2 = set_type(add_exp(b2,set_type(uint_exp(1,DL),uint_type),DL),uint_type);
+          new_e2 = set_type(add_exp(b2,set_type(uint_exp(1,DL),ulong_type),DL),ulong_type);
 	let ptr_exp = e1;
 
         // ?`RC to *`RC requires current to be at base, else arraybounds
@@ -2319,7 +2319,7 @@ static void exp_to_c(env_t nv, exp_t e) {
             set_type(fncall_exp_dl(_untag_fat_ptr_check_bound_e,
                                    ptr_exp,
                                    set_type(sizeoftype_exp(typ_to_c(p1.elt_type),DL),
-                                            uint_type),
+                                            ulong_type),
                                    new_e2),cstar_type(uchar_type,mt_tq));
 	  break;
 	default:
@@ -2327,7 +2327,7 @@ static void exp_to_c(env_t nv, exp_t e) {
             set_type(fncall_exp_dl(_untag_fat_ptr_e,
                                    ptr_exp,
                                    set_type(sizeoftype_exp(typ_to_c(p1.elt_type),DL),
-                                            uint_type),
+                                            ulong_type),
                                    new_e2),cstar_type(uchar_type,mt_tq));
 	  break;
 	}
@@ -2345,8 +2345,8 @@ static void exp_to_c(env_t nv, exp_t e) {
           e->r = fncall_exp_r(_fat_ptr_decrease_size_e,
                               e1,
                               set_type(sizeoftype_exp(typ_to_c(p1.elt_type),DL),
-                                       uint_type),
-			      set_type(uint_exp(1,DL),uint_type));
+                                       ulong_type),
+			      set_type(uint_exp(1,DL),ulong_type));
         }
 	break;
       }
@@ -2400,7 +2400,7 @@ static void exp_to_c(env_t nv, exp_t e) {
     exp_t mexp;
     if (array_len != NULL) {
       lenvar = temp_var();
-      lenexp = set_type(var_exp((qvar_t)lenvar,DL),uint_type);
+      lenexp = set_type(var_exp((qvar_t)lenvar,DL),ulong_type);
       mexp = fncall_exp_dl(_check_times_e,lenexp,sizeoftype_exp(elt_typ,DL));
       // e1 could be a comprehension -- in which case, we're duplicating
       // the bounds expression here (which could have effects.)  So we
@@ -2414,12 +2414,12 @@ static void exp_to_c(env_t nv, exp_t e) {
       }
     } else
       mexp = sizeoftype_exp(elt_typ,DL); // :( don't have destination anymore
-    mexp->topt = uint_type;
+    mexp->topt = ulong_type;
     // deal with the struct hack (executing the bound twice and suffering
     // an unnecessary copy of the data)
     let vse = get_varsizeexp(e1);
     if(vse != NULL)
-      mexp = set_type(add_exp(mexp,vse,DL),uint_type);
+      mexp = set_type(add_exp(mexp,vse,DL),ulong_type);
     
     if((rgnopt == NULL && qual == NULL) || Flags::no_regions)
       mexp = malloc_exp(elt_typ,mexp);
@@ -2442,12 +2442,12 @@ static void exp_to_c(env_t nv, exp_t e) {
       e->r = fncall_exp_dl(_tag_fat_e,e2,
 			   sizeoftype_exp(elt_typ,DL),
 			   (lenexp ? lenexp : 
-                            set_type(uint_exp(1,DL),uint_type)))->r;
+                            set_type(uint_exp(1,DL),ulong_type)))->r;
     }
     if(vse != NULL) // in case of the struct hack, types do not line up
       e->r = cast_it_r(typ_to_c(old_typ),deep_copy(e));
     if(array_len) {
-      let s = declare_stmt((qvar_t)lenvar,uint_type,(exp_t)array_len,
+      let s = declare_stmt((qvar_t)lenvar,ulong_type,(exp_t)array_len,
 			   exp_stmt(deep_copy(e),DL),DL);
       e->r = stmt_exp_r(s);
     }
@@ -2623,7 +2623,7 @@ static void exp_to_c(env_t nv, exp_t e) {
 	  // tagged unions: have to add the tag field
 	  if(sd->impl->tagged) {
 	    let n = aggrfield->name;
-	    let tag_exp = set_type(uint_exp(get_member_offset(sd,n),DL),uint_type);
+	    let tag_exp = set_type(uint_exp(get_member_offset(sd,n),DL),ulong_type);
 	    let tag_dle = make_field(tag_sp,tag_exp);
 	    let val_dle = make_field(val_sp,fieldexp);
 	    qvar_t s = new $(Abs_n(NULL,true),
@@ -2658,7 +2658,7 @@ static void exp_to_c(env_t nv, exp_t e) {
 		case &ArrayType(ai):
 		  if(!Evexp::c_can_eval((exp_t)(ai.num_elts))) {
 		    let ai2 = ai;
-		    ai2.num_elts = set_type(uint_exp(0,DL),uint_type); // zero-length array type
+		    ai2.num_elts = set_type(uint_exp(0,DL),ulong_type); // zero-length array type
 		    new_f->type = new ArrayType(ai2);
 		  }
 		  break;
@@ -2830,10 +2830,10 @@ static void exp_to_c(env_t nv, exp_t e) {
       }
     }
     if (is_fat) {
-      exp_t  elt_sz = (mknd==Calloc ? sizeoftype_exp(t_c,DL) : set_type(uint_exp(1,DL),uint_type));
+      exp_t  elt_sz = (mknd==Calloc ? sizeoftype_exp(t_c,DL) : set_type(uint_exp(1,DL),ulong_type));
       exp_t  rexp   = fncall_exp_dl(_tag_fat_e,pexp,elt_sz,num_elts2);
       rexp->topt = fat_ptr_type();
-      stmt_t s      = declare_stmt((qvar_t)x, uint_type, num_elts,
+      stmt_t s      = declare_stmt((qvar_t)x, ulong_type, num_elts,
 				   exp_stmt(rexp,DL),DL);
       e->r = stmt_exp_r(s);
     } else
@@ -4090,13 +4090,13 @@ static int aggrdecl_to_c_body<`r2,`d,`r>(region_t<`d> d,
         switch (compress(old_type)) {
         case &ArrayType(ArrayInfo{et,tq,_,zt,ztl}):
           // Note: type checker forces et to be non-abstract
-          old_type = new ArrayType(ArrayInfo(et,tq,set_type(uint_exp(0,DL),uint_type),zt,ztl));
+          old_type = new ArrayType(ArrayInfo(et,tq,set_type(uint_exp(0,DL),ulong_type),zt,ztl));
           break;
         default:
           old_atts = new List(new Aligned_att(NULL),old_atts);
           old_type = new ArrayType(ArrayInfo(void_star_type(),
                                              mt_tq,
-                                             set_type(uint_exp(0,DL),uint_type),
+                                             set_type(uint_exp(0,DL),ulong_type),
                                              false_type,DL));
         }
       }
@@ -4215,7 +4215,7 @@ static int xdatatypedecl_to_c_body<`d,`r>(region_t<`d> d,
   for (let fs = xd->fields->v; fs != NULL; fs = fs->tl) {
     datatypefield_t f  = fs->hd;
     stringptr_t fn = (*f->name)[1];
-    let sz_exp  = set_type(uint_exp(numelts(*fn),DL),uint_type);
+    let sz_exp  = set_type(uint_exp(numelts(*fn),DL),ulong_type);
     let tag_typ = array_type(char_type,mt_tq,sz_exp,false_type,DL);
     // FIX: making bad alignment and pointer-size assumptions!
     switch (Dict::lookup_opt(*xdatatypes_so_far,f->name)) {
@@ -4298,7 +4298,7 @@ static void local_decl_to_c(env_t nv,vardecl_t vd,stmt_t s) {
                                          typ_to_c_array(old_typ)),
                                 set_type(
                                 add_exp(num_elts_opt,
-                                        set_type(signed_int_exp(-1,DL),sint_type),DL),sint_type),
+                                        set_type(signed_int_exp(-1,DL),slong_type),DL),slong_type),
                                 DL);
         let rhs = set_type(signed_int_exp(0,DL),sint_type);
         s->r = seq_stmt_r(exp_stmt(assign_exp(lhs,rhs,DL),DL),

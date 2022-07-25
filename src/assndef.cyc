@@ -991,7 +991,7 @@ term_t offseti(term_t tm, term_t i, type_opt_t tp){
   case $(_,&Uint(0,_)): return tm;
   case $(&Offseti(t,j,tp2),_):
     if (tp != NULL && tp2 != NULL && Unify::unify(tp,tp2))
-      return offseti(t,plus(i,j,Absyn::sint_type),tp);
+      return offseti(t,plus(i,j,Absyn::slong_type),tp);
     fallthru;
   default:
     let t = Offseti(tm,i,tp);
@@ -1022,7 +1022,7 @@ term_t unop(Absyn::primop_t p, term_t t, type_opt_t tp) {
 }
 
 term_t numelts_term(term_t t) {
-  return unop(Absyn::Numelts, t, Absyn::uint_type);
+  return unop(Absyn::Numelts, t, Absyn::ulong_type);
 }
 
 // Need to fake up vardecls for the "memory" and "exception"

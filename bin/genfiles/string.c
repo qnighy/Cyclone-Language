@@ -350,11 +350,11 @@ void _profile_free_region(struct _RegionHandle*,const char*,const char*,int);
 # 100
 struct _fat_ptr Cyc_Core_rnew_string(struct _RegionHandle*,unsigned);
 # 105
-struct _fat_ptr Cyc_Core_rqnew_string(struct _RegionHandle*,unsigned,unsigned);extern char Cyc_Core_Invalid_argument[17U];struct Cyc_Core_Invalid_argument_exn_struct{char*tag;struct _fat_ptr f1;};extern char Cyc_Core_Impossible[11U];struct Cyc_Core_Impossible_exn_struct{char*tag;struct _fat_ptr f1;};
+struct _fat_ptr Cyc_Core_rqnew_string(struct _RegionHandle*,unsigned long,unsigned);extern char Cyc_Core_Invalid_argument[17U];struct Cyc_Core_Invalid_argument_exn_struct{char*tag;struct _fat_ptr f1;};extern char Cyc_Core_Impossible[11U];struct Cyc_Core_Impossible_exn_struct{char*tag;struct _fat_ptr f1;};
 # 173
 extern struct _RegionHandle*Cyc_Core_heap_region;
 # 179
-extern unsigned Cyc_Core_aliasable_qual;
+extern unsigned long Cyc_Core_aliasable_qual;
 # 351 "core.h"
 struct _fat_ptr Cyc_Core_mkfat(void*,unsigned,unsigned);struct Cyc_List_List{void*hd;struct Cyc_List_List*tl;};
 # 61 "list.h"
@@ -478,7 +478,7 @@ int Cyc_zstrptrcmp(struct _fat_ptr*a,struct _fat_ptr*b){struct _fat_ptr*_T0;int 
 if(_T1!=_T3)goto _TL43;return 0;_TL43: _T4=a;_T5=*_T4;_T6=b;_T7=*_T6;_T8=
 Cyc_zstrcmp(_T5,_T7);return _T8;}
 # 169
-inline static struct _fat_ptr Cyc_int_strcato(struct _fat_ptr dest,struct _fat_ptr src){struct _fat_ptr _T0;unsigned long _T1;int _T2;struct _fat_ptr _T3;int _T4;unsigned long _T5;unsigned long _T6;struct _fat_ptr _T7;int _T8;unsigned char*_T9;char*_TA;char*_TB;struct _fat_ptr _TC;unsigned char*_TD;const char*_TE;const char*_TF;int _T10;unsigned _T11;unsigned char*_T12;char*_T13;int _T14;unsigned long _T15;unsigned long _T16;struct _fat_ptr _T17;int _T18;unsigned char*_T19;char*_T1A;char*_T1B;unsigned _T1C;unsigned char*_T1D;char*_T1E;struct Cyc_Core_Invalid_argument_exn_struct*_T1F;void*_T20;struct _fat_ptr _T21;
+inline static struct _fat_ptr Cyc_int_strcato(struct _fat_ptr dest,struct _fat_ptr src){struct _fat_ptr _T0;unsigned long _T1;int _T2;struct _fat_ptr _T3;int _T4;unsigned long _T5;unsigned long _T6;struct _fat_ptr _T7;int _T8;unsigned char*_T9;char*_TA;char*_TB;struct _fat_ptr _TC;unsigned char*_TD;const char*_TE;const char*_TF;int _T10;unsigned long _T11;unsigned char*_T12;char*_T13;int _T14;unsigned long _T15;unsigned long _T16;struct _fat_ptr _T17;int _T18;unsigned char*_T19;char*_T1A;char*_T1B;unsigned long _T1C;unsigned char*_T1D;char*_T1E;struct Cyc_Core_Invalid_argument_exn_struct*_T1F;void*_T20;struct _fat_ptr _T21;
 int i;
 unsigned long dsize;unsigned long slen;unsigned long dlen;unsigned long dplen;
 # 173
@@ -502,7 +502,7 @@ return _T21;}}
 struct _fat_ptr Cyc_strcat(struct _fat_ptr dest,struct _fat_ptr src){struct _fat_ptr _T0;_T0=
 Cyc_int_strcato(dest,src);return _T0;}
 # 198
-struct _fat_ptr Cyc_rstrconcat(struct _RegionHandle*r,struct _fat_ptr a,struct _fat_ptr b){struct _RegionHandle*_T0;unsigned _T1;unsigned _T2;struct _fat_ptr _T3;unsigned _T4;int _T5;unsigned _T6;struct _fat_ptr _T7;unsigned _T8;struct Cyc_Core_Impossible_exn_struct*_T9;void*_TA;struct _fat_ptr _TB;unsigned _TC;int _TD;unsigned char*_TE;char*_TF;char*_T10;struct _fat_ptr _T11;unsigned char*_T12;const char*_T13;const char*_T14;unsigned _T15;int _T16;unsigned _T17;unsigned char*_T18;char*_T19;unsigned _T1A;struct _fat_ptr _T1B;unsigned _T1C;struct Cyc_Core_Impossible_exn_struct*_T1D;void*_T1E;struct _fat_ptr _T1F;unsigned _T20;int _T21;unsigned char*_T22;char*_T23;char*_T24;struct _fat_ptr _T25;unsigned char*_T26;const char*_T27;const char*_T28;unsigned _T29;int _T2A;unsigned _T2B;unsigned char*_T2C;char*_T2D;struct _fat_ptr _T2E;
+struct _fat_ptr Cyc_rstrconcat(struct _RegionHandle*r,struct _fat_ptr a,struct _fat_ptr b){struct _RegionHandle*_T0;unsigned _T1;unsigned _T2;struct _fat_ptr _T3;unsigned _T4;int _T5;unsigned _T6;struct _fat_ptr _T7;unsigned long _T8;struct Cyc_Core_Impossible_exn_struct*_T9;void*_TA;struct _fat_ptr _TB;unsigned _TC;int _TD;unsigned char*_TE;char*_TF;char*_T10;struct _fat_ptr _T11;unsigned char*_T12;const char*_T13;const char*_T14;unsigned _T15;int _T16;unsigned long _T17;unsigned char*_T18;char*_T19;unsigned _T1A;struct _fat_ptr _T1B;unsigned long _T1C;struct Cyc_Core_Impossible_exn_struct*_T1D;void*_T1E;struct _fat_ptr _T1F;unsigned _T20;int _T21;unsigned char*_T22;char*_T23;char*_T24;struct _fat_ptr _T25;unsigned char*_T26;const char*_T27;const char*_T28;unsigned _T29;int _T2A;unsigned long _T2B;unsigned char*_T2C;char*_T2D;struct _fat_ptr _T2E;
 unsigned alen=Cyc_strlen(a);
 unsigned blen=Cyc_strlen(b);_T0=r;_T1=alen + blen;_T2=_T1 + 1U;{
 struct _fat_ptr ans=Cyc_Core_rnew_string(_T0,_T2);_T3=ans;_T4=alen;_T5=(int)_T4;{
@@ -598,7 +598,7 @@ _fat_ptr_plus(_T36,sizeof(char),_T38);_T3A=_fat_ptr_decrease_size(_T39,sizeof(ch
 struct _fat_ptr Cyc_str_sepstr(struct Cyc_List_List*strs,struct _fat_ptr separator){struct _fat_ptr _T0;_T0=
 Cyc_rstr_sepstr(Cyc_Core_heap_region,strs,separator);return _T0;}
 # 299
-struct _fat_ptr Cyc_strncpy(struct _fat_ptr dest,struct _fat_ptr src,unsigned long n){unsigned long _T0;struct _fat_ptr _T1;unsigned _T2;unsigned long _T3;struct _fat_ptr _T4;unsigned _T5;struct Cyc_Core_Invalid_argument_exn_struct*_T6;void*_T7;struct _fat_ptr _T8;unsigned char*_T9;const char*_TA;const char*_TB;unsigned _TC;int _TD;char _TE;int _TF;struct _fat_ptr _T10;unsigned char*_T11;char*_T12;char*_T13;unsigned _T14;int _T15;struct _fat_ptr _T16;unsigned char*_T17;char*_T18;char*_T19;unsigned _T1A;int _T1B;struct _fat_ptr _T1C;
+struct _fat_ptr Cyc_strncpy(struct _fat_ptr dest,struct _fat_ptr src,unsigned long n){unsigned long _T0;struct _fat_ptr _T1;unsigned long _T2;unsigned long _T3;struct _fat_ptr _T4;unsigned long _T5;struct Cyc_Core_Invalid_argument_exn_struct*_T6;void*_T7;struct _fat_ptr _T8;unsigned char*_T9;const char*_TA;const char*_TB;unsigned _TC;int _TD;char _TE;int _TF;struct _fat_ptr _T10;unsigned char*_T11;char*_T12;char*_T13;unsigned _T14;int _T15;struct _fat_ptr _T16;unsigned char*_T17;char*_T18;char*_T19;unsigned _T1A;int _T1B;struct _fat_ptr _T1C;
 unsigned i;_T0=n;_T1=src;_T2=
 _get_fat_size(_T1,sizeof(char));if(_T0 > _T2)goto _TL75;else{goto _TL76;}_TL76: _T3=n;_T4=dest;_T5=_get_fat_size(_T4,sizeof(char));if(_T3 > _T5)goto _TL75;else{goto _TL73;}
 _TL75:{struct Cyc_Core_Invalid_argument_exn_struct*_T1D=_cycalloc(sizeof(struct Cyc_Core_Invalid_argument_exn_struct));_T1D->tag=Cyc_Core_Invalid_argument;_T1D->f1=_tag_fat("strncpy",sizeof(char),8U);_T6=(struct Cyc_Core_Invalid_argument_exn_struct*)_T1D;}_T7=(void*)_T6;_throw(_T7);goto _TL74;_TL73: _TL74:
@@ -616,7 +616,7 @@ i=i + 1;goto _TL80;_TL7F: _T1C=dest;
 # 311
 return _T1C;}
 # 315
-struct _fat_ptr Cyc_zstrncpy(struct _fat_ptr dest,struct _fat_ptr src,unsigned long n){unsigned long _T0;struct _fat_ptr _T1;unsigned _T2;unsigned long _T3;struct _fat_ptr _T4;unsigned _T5;struct Cyc_Core_Invalid_argument_exn_struct*_T6;void*_T7;struct _fat_ptr _T8;unsigned char*_T9;char*_TA;char*_TB;unsigned _TC;int _TD;struct _fat_ptr _TE;unsigned char*_TF;const char*_T10;const char*_T11;unsigned _T12;int _T13;struct _fat_ptr _T14;_T0=n;_T1=dest;_T2=
+struct _fat_ptr Cyc_zstrncpy(struct _fat_ptr dest,struct _fat_ptr src,unsigned long n){unsigned long _T0;struct _fat_ptr _T1;unsigned long _T2;unsigned long _T3;struct _fat_ptr _T4;unsigned long _T5;struct Cyc_Core_Invalid_argument_exn_struct*_T6;void*_T7;struct _fat_ptr _T8;unsigned char*_T9;char*_TA;char*_TB;unsigned _TC;int _TD;struct _fat_ptr _TE;unsigned char*_TF;const char*_T10;const char*_T11;unsigned _T12;int _T13;struct _fat_ptr _T14;_T0=n;_T1=dest;_T2=
 _get_fat_size(_T1,sizeof(char));if(_T0 > _T2)goto _TL83;else{goto _TL84;}_TL84: _T3=n;_T4=src;_T5=_get_fat_size(_T4,sizeof(char));if(_T3 > _T5)goto _TL83;else{goto _TL81;}
 _TL83:{struct Cyc_Core_Invalid_argument_exn_struct*_T15=_cycalloc(sizeof(struct Cyc_Core_Invalid_argument_exn_struct));_T15->tag=Cyc_Core_Invalid_argument;_T15->f1=_tag_fat("zstrncpy",sizeof(char),9U);_T6=(struct Cyc_Core_Invalid_argument_exn_struct*)_T15;}_T7=(void*)_T6;_throw(_T7);goto _TL82;_TL81: _TL82: {
 unsigned i;
@@ -627,7 +627,7 @@ i=i + 1;goto _TL88;_TL87: _T14=dest;
 # 321
 return _T14;}}
 # 324
-struct _fat_ptr Cyc_strcpy(struct _fat_ptr dest,struct _fat_ptr src){struct _fat_ptr _T0;struct _fat_ptr _T1;struct _fat_ptr _T2;unsigned char*_T3;const char*_T4;const char*_T5;unsigned _T6;int _T7;struct _fat_ptr _T8;unsigned _T9;int _TA;unsigned char*_TB;char*_TC;char*_TD;unsigned _TE;unsigned char*_TF;char*_T10;char _T11;int _T12;struct _fat_ptr _T13;struct _fat_ptr _T14;struct _fat_ptr _T15;unsigned long _T16;unsigned long _T17;struct _fat_ptr _T18;unsigned _T19;struct _fat_ptr _T1A;unsigned long _T1B;int _T1C;unsigned char*_T1D;char*_T1E;char*_T1F;unsigned _T20;unsigned char*_T21;char*_T22;struct _fat_ptr _T23;_T0=src;{
+struct _fat_ptr Cyc_strcpy(struct _fat_ptr dest,struct _fat_ptr src){struct _fat_ptr _T0;struct _fat_ptr _T1;struct _fat_ptr _T2;unsigned char*_T3;const char*_T4;const char*_T5;unsigned _T6;int _T7;struct _fat_ptr _T8;unsigned _T9;int _TA;unsigned char*_TB;char*_TC;char*_TD;unsigned long _TE;unsigned char*_TF;char*_T10;char _T11;int _T12;struct _fat_ptr _T13;struct _fat_ptr _T14;struct _fat_ptr _T15;unsigned long _T16;unsigned long _T17;struct _fat_ptr _T18;unsigned long _T19;struct _fat_ptr _T1A;unsigned long _T1B;int _T1C;unsigned char*_T1D;char*_T1E;char*_T1F;unsigned long _T20;unsigned char*_T21;char*_T22;struct _fat_ptr _T23;_T0=src;{
 unsigned ssz=_get_fat_size(_T0,sizeof(char));_T1=dest;{
 unsigned dsz=_get_fat_size(_T1,sizeof(char));
 if(ssz > dsz)goto _TL89;{
@@ -657,7 +657,7 @@ Cyc_strncpy(dst,src,len);}}_T3=temp;
 # 357
 return _T3;}
 # 360
-struct _fat_ptr Cyc_rqstrdup(struct _RegionHandle*r,unsigned q,struct _fat_ptr src){struct _RegionHandle*_T0;unsigned _T1;unsigned long _T2;struct _fat_ptr _T3;struct _fat_ptr _T4;
+struct _fat_ptr Cyc_rqstrdup(struct _RegionHandle*r,unsigned long q,struct _fat_ptr src){struct _RegionHandle*_T0;unsigned long _T1;unsigned long _T2;struct _fat_ptr _T3;struct _fat_ptr _T4;
 unsigned long len=Cyc_strlen(src);_T0=r;_T1=q;_T2=len + 1U;{
 struct _fat_ptr temp=Cyc_Core_rqnew_string(_T0,_T1,_T2);_T3=temp;{
 # 364
@@ -670,12 +670,12 @@ return _T4;}}
 struct _fat_ptr Cyc_strdup(struct _fat_ptr src){struct _fat_ptr _T0;_T0=
 Cyc_rstrdup(Cyc_Core_heap_region,src);return _T0;}
 # 375
-struct _fat_ptr Cyc_rqrealloc(struct _RegionHandle*r,unsigned q,struct _fat_ptr s,unsigned long sz){struct _fat_ptr _T0;unsigned long _T1;struct _fat_ptr _T2;struct _RegionHandle*_T3;unsigned _T4;void*_T5;struct _fat_ptr _T6;struct _fat_ptr _T7;struct _fat_ptr _T8;unsigned long _T9;struct _fat_ptr _TA;
+struct _fat_ptr Cyc_rqrealloc(struct _RegionHandle*r,unsigned long q,struct _fat_ptr s,unsigned long sz){struct _fat_ptr _T0;unsigned long _T1;struct _fat_ptr _T2;struct _RegionHandle*_T3;unsigned long _T4;void*_T5;struct _fat_ptr _T6;struct _fat_ptr _T7;struct _fat_ptr _T8;unsigned long _T9;struct _fat_ptr _TA;
 struct _fat_ptr temp;
 unsigned long slen;_T0=s;
 # 379
 slen=_get_fat_size(_T0,sizeof(char));
-if(sz <= slen)goto _TL97;_T1=sz;goto _TL98;_TL97: _T1=slen;_TL98: sz=_T1;{unsigned _TB=sz;_T3=r;_T4=q;_T5=_region_calloc(_T3,_T4,sizeof(char),_TB);_T2=_tag_fat(_T5,sizeof(char),_TB);}
+if(sz <= slen)goto _TL97;_T1=sz;goto _TL98;_TL97: _T1=slen;_TL98: sz=_T1;{unsigned long _TB=sz;_T3=r;_T4=q;_T5=_region_calloc(_T3,_T4,sizeof(char),_TB);_T2=_tag_fat(_T5,sizeof(char),_TB);}
 temp=_T2;{struct _fat_ptr _TB;_TB=temp;{struct _fat_ptr dst=_TB;_T6=dst;_T7=_T6;_T8=s;_T9=slen;
 # 384
 Cyc_strncpy(_T7,_T8,_T9);}}_TA=temp;
@@ -685,7 +685,7 @@ return _TA;}
 struct _fat_ptr Cyc_rrealloc(struct _RegionHandle*r,struct _fat_ptr s,unsigned long sz){struct _fat_ptr _T0;_T0=
 Cyc_rqrealloc(r,Cyc_Core_aliasable_qual,s,sz);return _T0;}
 # 394
-struct _fat_ptr Cyc_rexpand(struct _RegionHandle*r,struct _fat_ptr s,unsigned long sz){unsigned long _T0;struct _fat_ptr _T1;struct _fat_ptr _T2;struct _fat_ptr _T3;unsigned long _T4;unsigned long _T5;struct _fat_ptr _T6;unsigned _T7;struct _fat_ptr _T8;unsigned long _T9;int _TA;unsigned char*_TB;char*_TC;unsigned _TD;unsigned char*_TE;char*_TF;struct _fat_ptr _T10;
+struct _fat_ptr Cyc_rexpand(struct _RegionHandle*r,struct _fat_ptr s,unsigned long sz){unsigned long _T0;struct _fat_ptr _T1;struct _fat_ptr _T2;struct _fat_ptr _T3;unsigned long _T4;unsigned long _T5;struct _fat_ptr _T6;unsigned long _T7;struct _fat_ptr _T8;unsigned long _T9;int _TA;unsigned char*_TB;char*_TC;unsigned long _TD;unsigned char*_TE;char*_TF;struct _fat_ptr _T10;
 struct _fat_ptr temp;
 unsigned long slen;
 # 398
@@ -702,7 +702,7 @@ return _T10;}
 struct _fat_ptr Cyc_expand(struct _fat_ptr s,unsigned long sz){struct _fat_ptr _T0;_T0=
 Cyc_rexpand(Cyc_Core_heap_region,s,sz);return _T0;}
 # 416
-struct _fat_ptr Cyc_cond_rrealloc_str(struct _RegionHandle*r,struct _fat_ptr str,unsigned long sz){struct _fat_ptr _T0;struct _fat_ptr _T1;unsigned char*_T2;char*_T3;char*_T4;unsigned _T5;unsigned char*_T6;char*_T7;unsigned long _T8;unsigned long _T9;unsigned long _TA;unsigned long _TB;unsigned long _TC;struct _fat_ptr _TD;_T0=str;{
+struct _fat_ptr Cyc_cond_rrealloc_str(struct _RegionHandle*r,struct _fat_ptr str,unsigned long sz){struct _fat_ptr _T0;struct _fat_ptr _T1;unsigned char*_T2;char*_T3;char*_T4;unsigned long _T5;unsigned char*_T6;char*_T7;unsigned long _T8;unsigned long _T9;unsigned long _TA;unsigned long _TB;unsigned long _TC;struct _fat_ptr _TD;_T0=str;{
 unsigned long maxsizeP=_get_fat_size(_T0,sizeof(char));
 struct _fat_ptr res=_tag_fat(0,0,0);
 # 420
@@ -722,7 +722,7 @@ struct _fat_ptr res=Cyc_cond_rrealloc_str(Cyc_Core_heap_region,str,sz);_T0=res;_
 if(_T2!=0)goto _TLA7;_T3=str;return _T3;
 _TLA7: _T4=res;return _T4;}
 # 446
-struct _fat_ptr Cyc_rsubstring(struct _RegionHandle*r,struct _fat_ptr s,int start,unsigned long amt){struct _RegionHandle*_T0;unsigned long _T1;struct _fat_ptr _T2;int _T3;unsigned long _T4;struct _fat_ptr _T5;unsigned _T6;unsigned long _T7;struct _fat_ptr _T8;unsigned _T9;struct Cyc_Core_Invalid_argument_exn_struct*_TA;void*_TB;struct _fat_ptr _TC;unsigned long _TD;int _TE;unsigned char*_TF;char*_T10;char*_T11;struct _fat_ptr _T12;unsigned char*_T13;const char*_T14;const char*_T15;unsigned long _T16;int _T17;unsigned _T18;unsigned char*_T19;char*_T1A;struct _fat_ptr _T1B;unsigned long _T1C;int _T1D;unsigned char*_T1E;char*_T1F;char*_T20;unsigned _T21;unsigned char*_T22;char*_T23;struct _fat_ptr _T24;_T0=r;_T1=amt + 1U;{
+struct _fat_ptr Cyc_rsubstring(struct _RegionHandle*r,struct _fat_ptr s,int start,unsigned long amt){struct _RegionHandle*_T0;unsigned long _T1;struct _fat_ptr _T2;int _T3;unsigned long _T4;struct _fat_ptr _T5;unsigned long _T6;unsigned long _T7;struct _fat_ptr _T8;unsigned long _T9;struct Cyc_Core_Invalid_argument_exn_struct*_TA;void*_TB;struct _fat_ptr _TC;unsigned long _TD;int _TE;unsigned char*_TF;char*_T10;char*_T11;struct _fat_ptr _T12;unsigned char*_T13;const char*_T14;const char*_T15;unsigned long _T16;int _T17;unsigned long _T18;unsigned char*_T19;char*_T1A;struct _fat_ptr _T1B;unsigned long _T1C;int _T1D;unsigned char*_T1E;char*_T1F;char*_T20;unsigned long _T21;unsigned char*_T22;char*_T23;struct _fat_ptr _T24;_T0=r;_T1=amt + 1U;{
 # 450
 struct _fat_ptr ans=Cyc_Core_rnew_string(_T0,_T1);_T2=s;_T3=start;
 s=_fat_ptr_plus(_T2,sizeof(char),_T3);_T4=amt;_T5=ans;_T6=
@@ -738,7 +738,7 @@ return _T24;}}
 struct _fat_ptr Cyc_substring(struct _fat_ptr s,int start,unsigned long amt){struct _fat_ptr _T0;_T0=
 Cyc_rsubstring(Cyc_Core_heap_region,s,start,amt);return _T0;}
 # 466
-struct _fat_ptr Cyc_rreplace_suffix(struct _RegionHandle*r,struct _fat_ptr src,struct _fat_ptr curr_suffix,struct _fat_ptr new_suffix){struct _fat_ptr _T0;struct _fat_ptr _T1;struct Cyc_Core_Invalid_argument_exn_struct*_T2;void*_T3;struct _fat_ptr _T4;unsigned long _T5;int _T6;unsigned char*_T7;const char*_T8;char _T9;int _TA;struct _fat_ptr _TB;unsigned long _TC;int _TD;unsigned char*_TE;const char*_TF;char _T10;int _T11;struct Cyc_Core_Invalid_argument_exn_struct*_T12;void*_T13;struct _RegionHandle*_T14;unsigned long _T15;struct _fat_ptr _T16;unsigned _T17;unsigned long _T18;unsigned long _T19;struct _fat_ptr _T1A;struct _fat_ptr _T1B;struct _fat_ptr _T1C;unsigned long _T1D;struct _fat_ptr _T1E;unsigned long _T1F;int _T20;struct _fat_ptr _T21;struct _fat_ptr _T22;struct _fat_ptr _T23;struct _fat_ptr _T24;unsigned _T25;struct _fat_ptr _T26;_T0=src;{
+struct _fat_ptr Cyc_rreplace_suffix(struct _RegionHandle*r,struct _fat_ptr src,struct _fat_ptr curr_suffix,struct _fat_ptr new_suffix){struct _fat_ptr _T0;struct _fat_ptr _T1;struct Cyc_Core_Invalid_argument_exn_struct*_T2;void*_T3;struct _fat_ptr _T4;unsigned long _T5;int _T6;unsigned char*_T7;const char*_T8;char _T9;int _TA;struct _fat_ptr _TB;unsigned long _TC;int _TD;unsigned char*_TE;const char*_TF;char _T10;int _T11;struct Cyc_Core_Invalid_argument_exn_struct*_T12;void*_T13;struct _RegionHandle*_T14;unsigned long _T15;struct _fat_ptr _T16;unsigned long _T17;unsigned long _T18;unsigned long _T19;struct _fat_ptr _T1A;struct _fat_ptr _T1B;struct _fat_ptr _T1C;unsigned long _T1D;struct _fat_ptr _T1E;unsigned long _T1F;int _T20;struct _fat_ptr _T21;struct _fat_ptr _T22;struct _fat_ptr _T23;struct _fat_ptr _T24;unsigned long _T25;struct _fat_ptr _T26;_T0=src;{
 unsigned long m=_get_fat_size(_T0,sizeof(char));_T1=curr_suffix;{
 unsigned long n=_get_fat_size(_T1,sizeof(char));
 struct _fat_ptr err=_tag_fat("replace_suffix",sizeof(char),15U);
@@ -758,7 +758,7 @@ return _T26;}}}}
 struct _fat_ptr Cyc_replace_suffix(struct _fat_ptr src,struct _fat_ptr curr_suffix,struct _fat_ptr new_suffix){struct _fat_ptr _T0;_T0=
 Cyc_rreplace_suffix(Cyc_Core_heap_region,src,curr_suffix,new_suffix);return _T0;}
 # 488
-struct _fat_ptr Cyc_strpbrk(struct _fat_ptr s,struct _fat_ptr accept){struct _fat_ptr _T0;unsigned _T1;struct _fat_ptr _T2;unsigned _T3;int _T4;unsigned _T5;struct _fat_ptr _T6;unsigned char*_T7;const char*_T8;const char*_T9;unsigned _TA;int _TB;char _TC;int _TD;char _TE;int _TF;struct _fat_ptr _T10;unsigned char*_T11;const char*_T12;const char*_T13;unsigned _T14;int _T15;char _T16;int _T17;struct _fat_ptr _T18;unsigned _T19;int _T1A;struct _fat_ptr _T1B;struct _fat_ptr _T1C;_T0=s;_T1=
+struct _fat_ptr Cyc_strpbrk(struct _fat_ptr s,struct _fat_ptr accept){struct _fat_ptr _T0;unsigned long _T1;struct _fat_ptr _T2;unsigned _T3;int _T4;unsigned _T5;struct _fat_ptr _T6;unsigned char*_T7;const char*_T8;const char*_T9;unsigned _TA;int _TB;char _TC;int _TD;char _TE;int _TF;struct _fat_ptr _T10;unsigned char*_T11;const char*_T12;const char*_T13;unsigned _T14;int _T15;char _T16;int _T17;struct _fat_ptr _T18;unsigned _T19;int _T1A;struct _fat_ptr _T1B;struct _fat_ptr _T1C;_T0=s;_T1=
 _get_fat_size(_T0,sizeof(char));{int len=(int)_T1;_T2=accept;{
 unsigned asize=_get_fat_size(_T2,sizeof(char));
 char c;
@@ -774,7 +774,7 @@ i=i + 1;goto _TLC0;_TLBF: _T1C=
 # 498
 _tag_fat(0,0,0);return _T1C;}}}
 # 501
-struct _fat_ptr Cyc_mstrpbrk(struct _fat_ptr s,struct _fat_ptr accept){struct _fat_ptr _T0;unsigned _T1;struct _fat_ptr _T2;unsigned _T3;int _T4;unsigned _T5;struct _fat_ptr _T6;unsigned char*_T7;char*_T8;char*_T9;unsigned _TA;int _TB;char _TC;int _TD;char _TE;int _TF;struct _fat_ptr _T10;unsigned char*_T11;const char*_T12;const char*_T13;unsigned _T14;int _T15;char _T16;int _T17;struct _fat_ptr _T18;unsigned _T19;int _T1A;struct _fat_ptr _T1B;struct _fat_ptr _T1C;_T0=s;_T1=
+struct _fat_ptr Cyc_mstrpbrk(struct _fat_ptr s,struct _fat_ptr accept){struct _fat_ptr _T0;unsigned long _T1;struct _fat_ptr _T2;unsigned _T3;int _T4;unsigned _T5;struct _fat_ptr _T6;unsigned char*_T7;char*_T8;char*_T9;unsigned _TA;int _TB;char _TC;int _TD;char _TE;int _TF;struct _fat_ptr _T10;unsigned char*_T11;const char*_T12;const char*_T13;unsigned _T14;int _T15;char _T16;int _T17;struct _fat_ptr _T18;unsigned _T19;int _T1A;struct _fat_ptr _T1B;struct _fat_ptr _T1C;_T0=s;_T1=
 _get_fat_size(_T0,sizeof(char));{int len=(int)_T1;_T2=accept;{
 unsigned asize=_get_fat_size(_T2,sizeof(char));
 char c;
@@ -790,7 +790,7 @@ i=i + 1;goto _TLCB;_TLCA: _T1C=
 # 511
 _tag_fat(0,0,0);return _T1C;}}}
 # 516
-struct _fat_ptr Cyc_mstrchr(struct _fat_ptr s,char c){struct _fat_ptr _T0;unsigned _T1;unsigned _T2;int _T3;unsigned _T4;struct _fat_ptr _T5;unsigned char*_T6;char*_T7;char*_T8;unsigned _T9;int _TA;char _TB;int _TC;char _TD;int _TE;char _TF;int _T10;struct _fat_ptr _T11;unsigned _T12;int _T13;struct _fat_ptr _T14;struct _fat_ptr _T15;_T0=s;_T1=
+struct _fat_ptr Cyc_mstrchr(struct _fat_ptr s,char c){struct _fat_ptr _T0;unsigned long _T1;unsigned _T2;int _T3;unsigned _T4;struct _fat_ptr _T5;unsigned char*_T6;char*_T7;char*_T8;unsigned _T9;int _TA;char _TB;int _TC;char _TD;int _TE;char _TF;int _T10;struct _fat_ptr _T11;unsigned _T12;int _T13;struct _fat_ptr _T14;struct _fat_ptr _T15;_T0=s;_T1=
 _get_fat_size(_T0,sizeof(char));{int len=(int)_T1;
 char c2;
 unsigned i;
@@ -802,7 +802,7 @@ _TLD4: _TD=c2;_TE=(int)_TD;_TF=c;_T10=(int)_TF;if(_TE!=_T10)goto _TLD8;_T11=s;_T
 # 524
 _tag_fat(0,0,0);return _T15;}}
 # 527
-struct _fat_ptr Cyc_strchr(struct _fat_ptr s,char c){struct _fat_ptr _T0;unsigned _T1;unsigned _T2;int _T3;unsigned _T4;struct _fat_ptr _T5;unsigned char*_T6;const char*_T7;const char*_T8;unsigned _T9;int _TA;char _TB;int _TC;char _TD;int _TE;char _TF;int _T10;struct _fat_ptr _T11;unsigned _T12;int _T13;struct _fat_ptr _T14;struct _fat_ptr _T15;_T0=s;_T1=
+struct _fat_ptr Cyc_strchr(struct _fat_ptr s,char c){struct _fat_ptr _T0;unsigned long _T1;unsigned _T2;int _T3;unsigned _T4;struct _fat_ptr _T5;unsigned char*_T6;const char*_T7;const char*_T8;unsigned _T9;int _TA;char _TB;int _TC;char _TD;int _TE;char _TF;int _T10;struct _fat_ptr _T11;unsigned _T12;int _T13;struct _fat_ptr _T14;struct _fat_ptr _T15;_T0=s;_T1=
 _get_fat_size(_T0,sizeof(char));{int len=(int)_T1;
 char c2;
 unsigned i;
@@ -842,8 +842,8 @@ return _TB;_TLEB:
 # 563
 _tag_fat(0,0,0);return _TD;}}
 # 568
-struct _fat_ptr Cyc_strstr(struct _fat_ptr haystack,struct _fat_ptr needle){struct _fat_ptr _T0;unsigned char*_T1;unsigned _T2;struct _fat_ptr _T3;unsigned char*_T4;unsigned _T5;struct Cyc_Core_Invalid_argument_exn_struct*_T6;void*_T7;struct _fat_ptr _T8;unsigned char*_T9;const char*_TA;char _TB;int _TC;struct _fat_ptr _TD;unsigned long _TE;struct _fat_ptr _TF;struct _fat_ptr _T10;unsigned char*_T11;const char*_T12;char _T13;struct _fat_ptr _T14;unsigned char*_T15;char*_T16;struct _fat_ptr _T17;struct _fat_ptr _T18;int _T19;unsigned long _T1A;int _T1B;struct _fat_ptr _T1C;struct _fat_ptr _T1D;struct _fat_ptr _T1E;struct _fat_ptr _T1F;unsigned char*_T20;const char*_T21;char _T22;struct _fat_ptr _T23;_T0=haystack;_T1=_T0.curr;_T2=(unsigned)_T1;
-if(_T2)goto _TLF0;else{goto _TLEF;}_TLF0: _T3=needle;_T4=_T3.curr;_T5=(unsigned)_T4;if(_T5)goto _TLED;else{goto _TLEF;}_TLEF:{struct Cyc_Core_Invalid_argument_exn_struct*_T24=_cycalloc(sizeof(struct Cyc_Core_Invalid_argument_exn_struct));_T24->tag=Cyc_Core_Invalid_argument;_T24->f1=_tag_fat("strstr",sizeof(char),7U);_T6=(struct Cyc_Core_Invalid_argument_exn_struct*)_T24;}_T7=(void*)_T6;_throw(_T7);goto _TLEE;_TLED: _TLEE: _T8=needle;_T9=_check_fat_subscript(_T8,sizeof(char),0U);_TA=(const char*)_T9;_TB=*_TA;_TC=(int)_TB;
+struct _fat_ptr Cyc_strstr(struct _fat_ptr haystack,struct _fat_ptr needle){struct _fat_ptr _T0;unsigned char*_T1;unsigned long _T2;struct _fat_ptr _T3;unsigned char*_T4;unsigned long _T5;struct Cyc_Core_Invalid_argument_exn_struct*_T6;void*_T7;struct _fat_ptr _T8;unsigned char*_T9;const char*_TA;char _TB;int _TC;struct _fat_ptr _TD;unsigned long _TE;struct _fat_ptr _TF;struct _fat_ptr _T10;unsigned char*_T11;const char*_T12;char _T13;struct _fat_ptr _T14;unsigned char*_T15;char*_T16;struct _fat_ptr _T17;struct _fat_ptr _T18;int _T19;unsigned long _T1A;int _T1B;struct _fat_ptr _T1C;struct _fat_ptr _T1D;struct _fat_ptr _T1E;struct _fat_ptr _T1F;unsigned char*_T20;const char*_T21;char _T22;struct _fat_ptr _T23;_T0=haystack;_T1=_T0.curr;_T2=(unsigned long)_T1;
+if(_T2)goto _TLF0;else{goto _TLEF;}_TLF0: _T3=needle;_T4=_T3.curr;_T5=(unsigned long)_T4;if(_T5)goto _TLED;else{goto _TLEF;}_TLEF:{struct Cyc_Core_Invalid_argument_exn_struct*_T24=_cycalloc(sizeof(struct Cyc_Core_Invalid_argument_exn_struct));_T24->tag=Cyc_Core_Invalid_argument;_T24->f1=_tag_fat("strstr",sizeof(char),7U);_T6=(struct Cyc_Core_Invalid_argument_exn_struct*)_T24;}_T7=(void*)_T6;_throw(_T7);goto _TLEE;_TLED: _TLEE: _T8=needle;_T9=_check_fat_subscript(_T8,sizeof(char),0U);_TA=(const char*)_T9;_TB=*_TA;_TC=(int)_TB;
 if(_TC!=0)goto _TLF1;_TD=haystack;return _TD;_TLF1: _TE=
 # 572
 Cyc_strlen(needle);{int len=(int)_TE;{
@@ -859,8 +859,8 @@ _fat_ptr_plus(_T1D,sizeof(char),1);_T1F=needle;_T20=_T1F.curr;_T21=(const char*)
 # 579
 _tag_fat(0,0,0);return _T23;}}
 # 582
-struct _fat_ptr Cyc_mstrstr(struct _fat_ptr haystack,struct _fat_ptr needle){struct _fat_ptr _T0;unsigned char*_T1;unsigned _T2;struct _fat_ptr _T3;unsigned char*_T4;unsigned _T5;struct Cyc_Core_Invalid_argument_exn_struct*_T6;void*_T7;struct _fat_ptr _T8;unsigned char*_T9;const char*_TA;char _TB;int _TC;struct _fat_ptr _TD;unsigned long _TE;struct _fat_ptr _TF;struct _fat_ptr _T10;unsigned char*_T11;const char*_T12;char _T13;struct _fat_ptr _T14;unsigned char*_T15;char*_T16;struct _fat_ptr _T17;struct _fat_ptr _T18;int _T19;unsigned long _T1A;int _T1B;struct _fat_ptr _T1C;struct _fat_ptr _T1D;struct _fat_ptr _T1E;struct _fat_ptr _T1F;unsigned char*_T20;const char*_T21;char _T22;struct _fat_ptr _T23;_T0=haystack;_T1=_T0.curr;_T2=(unsigned)_T1;
-if(_T2)goto _TLFC;else{goto _TLFB;}_TLFC: _T3=needle;_T4=_T3.curr;_T5=(unsigned)_T4;if(_T5)goto _TLF9;else{goto _TLFB;}_TLFB:{struct Cyc_Core_Invalid_argument_exn_struct*_T24=_cycalloc(sizeof(struct Cyc_Core_Invalid_argument_exn_struct));_T24->tag=Cyc_Core_Invalid_argument;_T24->f1=_tag_fat("mstrstr",sizeof(char),8U);_T6=(struct Cyc_Core_Invalid_argument_exn_struct*)_T24;}_T7=(void*)_T6;_throw(_T7);goto _TLFA;_TLF9: _TLFA: _T8=needle;_T9=_check_fat_subscript(_T8,sizeof(char),0U);_TA=(const char*)_T9;_TB=*_TA;_TC=(int)_TB;
+struct _fat_ptr Cyc_mstrstr(struct _fat_ptr haystack,struct _fat_ptr needle){struct _fat_ptr _T0;unsigned char*_T1;unsigned long _T2;struct _fat_ptr _T3;unsigned char*_T4;unsigned long _T5;struct Cyc_Core_Invalid_argument_exn_struct*_T6;void*_T7;struct _fat_ptr _T8;unsigned char*_T9;const char*_TA;char _TB;int _TC;struct _fat_ptr _TD;unsigned long _TE;struct _fat_ptr _TF;struct _fat_ptr _T10;unsigned char*_T11;const char*_T12;char _T13;struct _fat_ptr _T14;unsigned char*_T15;char*_T16;struct _fat_ptr _T17;struct _fat_ptr _T18;int _T19;unsigned long _T1A;int _T1B;struct _fat_ptr _T1C;struct _fat_ptr _T1D;struct _fat_ptr _T1E;struct _fat_ptr _T1F;unsigned char*_T20;const char*_T21;char _T22;struct _fat_ptr _T23;_T0=haystack;_T1=_T0.curr;_T2=(unsigned long)_T1;
+if(_T2)goto _TLFC;else{goto _TLFB;}_TLFC: _T3=needle;_T4=_T3.curr;_T5=(unsigned long)_T4;if(_T5)goto _TLF9;else{goto _TLFB;}_TLFB:{struct Cyc_Core_Invalid_argument_exn_struct*_T24=_cycalloc(sizeof(struct Cyc_Core_Invalid_argument_exn_struct));_T24->tag=Cyc_Core_Invalid_argument;_T24->f1=_tag_fat("mstrstr",sizeof(char),8U);_T6=(struct Cyc_Core_Invalid_argument_exn_struct*)_T24;}_T7=(void*)_T6;_throw(_T7);goto _TLFA;_TLF9: _TLFA: _T8=needle;_T9=_check_fat_subscript(_T8,sizeof(char),0U);_TA=(const char*)_T9;_TB=*_TA;_TC=(int)_TB;
 if(_TC!=0)goto _TLFD;_TD=haystack;return _TD;_TLFD: _TE=
 # 586
 Cyc_strlen(needle);{int len=(int)_TE;{
@@ -911,7 +911,7 @@ i=i + 1;goto _TL114;_TL113:;}_T15=len;
 # 630
 return _T15;}}}
 # 637
-struct _fat_ptr Cyc_strtok(struct _fat_ptr s,struct _fat_ptr delim){struct _fat_ptr _T0;unsigned char*_T1;char*_T2;struct _fat_ptr _T3;unsigned char*_T4;char*_T5;struct _fat_ptr _T6;unsigned long _T7;struct _fat_ptr _T8;unsigned _T9;struct _fat_ptr _TA;unsigned long _TB;int _TC;struct _fat_ptr _TD;unsigned char*_TE;char*_TF;char _T10;int _T11;struct _fat_ptr _T12;struct _fat_ptr*_T13;unsigned long _T14;int _T15;struct _fat_ptr _T16;unsigned char*_T17;char*_T18;unsigned char*_T19;char*_T1A;unsigned _T1B;unsigned char*_T1C;char*_T1D;struct _fat_ptr _T1E;struct _fat_ptr _T1F;
+struct _fat_ptr Cyc_strtok(struct _fat_ptr s,struct _fat_ptr delim){struct _fat_ptr _T0;unsigned char*_T1;char*_T2;struct _fat_ptr _T3;unsigned char*_T4;char*_T5;struct _fat_ptr _T6;unsigned long _T7;struct _fat_ptr _T8;unsigned long _T9;struct _fat_ptr _TA;unsigned long _TB;int _TC;struct _fat_ptr _TD;unsigned char*_TE;char*_TF;char _T10;int _T11;struct _fat_ptr _T12;struct _fat_ptr*_T13;unsigned long _T14;int _T15;struct _fat_ptr _T16;unsigned char*_T17;char*_T18;unsigned char*_T19;char*_T1A;unsigned long _T1B;unsigned char*_T1C;char*_T1D;struct _fat_ptr _T1E;struct _fat_ptr _T1F;
 # 639
 static struct _fat_ptr olds={(void*)0,(void*)0,(void*)(0 + 0)};
 struct _fat_ptr token;_T0=s;_T1=_T0.curr;_T2=(char*)_T1;
@@ -952,7 +952,7 @@ return _T9;}
 struct Cyc_List_List*Cyc_explode(struct _fat_ptr s){struct Cyc_List_List*_T0;_T0=
 Cyc_rexplode(Cyc_Core_heap_region,s);return _T0;}
 # 685
-struct _fat_ptr Cyc_implode(struct Cyc_List_List*chars){int _T0;int _T1;unsigned _T2;struct _fat_ptr _T3;unsigned long _T4;unsigned long _T5;int _T6;unsigned char*_T7;char*_T8;struct Cyc_List_List*_T9;void*_TA;int _TB;unsigned _TC;unsigned char*_TD;char*_TE;struct Cyc_List_List*_TF;struct _fat_ptr _T10;_T0=
+struct _fat_ptr Cyc_implode(struct Cyc_List_List*chars){int _T0;int _T1;unsigned _T2;struct _fat_ptr _T3;unsigned long _T4;unsigned long _T5;int _T6;unsigned char*_T7;char*_T8;struct Cyc_List_List*_T9;void*_TA;int _TB;unsigned long _TC;unsigned char*_TD;char*_TE;struct Cyc_List_List*_TF;struct _fat_ptr _T10;_T0=
 Cyc_List_length(chars);_T1=_T0 + 1;_T2=(unsigned)_T1;{struct _fat_ptr s=Cyc_Core_new_string(_T2);
 unsigned long i=0U;
 _TL12B: if(chars!=0)goto _TL12C;else{goto _TL12D;}
@@ -1013,24 +1013,24 @@ extern void bzero(void*,unsigned long);
 extern char*GC_realloc_hint(char*,unsigned,unsigned);
 # 765
 struct _fat_ptr Cyc_realloc(struct _fat_ptr s,unsigned long n){struct _fat_ptr _T0;struct _fat_ptr _T1;unsigned char*_T2;char*_T3;unsigned _T4;unsigned _T5;struct _fat_ptr(*_T6)(char*,unsigned,unsigned);struct _fat_ptr(*_T7)(void*,unsigned,unsigned);char*_T8;unsigned _T9;struct _fat_ptr _TA;_T0=s;{
-unsigned _TB=_get_fat_size(_T0,sizeof(char));unsigned _TC;_TC=_TB;{unsigned oldsz=_TC;unsigned _TD;_TD=n;{unsigned l=_TD;_T1=s;_T2=_untag_fat_ptr_check_bound(_T1,sizeof(char),1U);_T3=(char*)_T2;_T4=oldsz;_T5=l;{
+unsigned long _TB=_get_fat_size(_T0,sizeof(char));unsigned _TC;_TC=_TB;{unsigned oldsz=_TC;unsigned _TD;_TD=n;{unsigned l=_TD;_T1=s;_T2=_untag_fat_ptr_check_bound(_T1,sizeof(char),1U);_T3=(char*)_T2;_T4=oldsz;_T5=l;{
 # 768
 char*res=GC_realloc_hint(_T3,_T4,_T5);_T7=Cyc_Core_mkfat;{
 struct _fat_ptr(*_TE)(char*,unsigned,unsigned)=(struct _fat_ptr(*)(char*,unsigned,unsigned))_T7;_T6=_TE;}_T8=_check_null(res);_T9=l;_TA=_T6(_T8,sizeof(char),_T9);return _TA;}}}}}
 # 772
-struct _fat_ptr Cyc__memcpy(struct _fat_ptr d,struct _fat_ptr s,unsigned long n,unsigned sz){struct _fat_ptr _T0;unsigned char*_T1;void*_T2;struct _fat_ptr _T3;unsigned _T4;unsigned long _T5;struct _fat_ptr _T6;unsigned char*_T7;void*_T8;struct _fat_ptr _T9;unsigned _TA;unsigned long _TB;struct Cyc_Core_Invalid_argument_exn_struct*_TC;void*_TD;struct _fat_ptr _TE;unsigned char*_TF;void*_T10;struct _fat_ptr _T11;unsigned char*_T12;const void*_T13;unsigned long _T14;struct _fat_ptr _T15;_T0=d;_T1=_T0.curr;_T2=(void*)_T1;
+struct _fat_ptr Cyc__memcpy(struct _fat_ptr d,struct _fat_ptr s,unsigned long n,unsigned sz){struct _fat_ptr _T0;unsigned char*_T1;void*_T2;struct _fat_ptr _T3;unsigned long _T4;unsigned long _T5;struct _fat_ptr _T6;unsigned char*_T7;void*_T8;struct _fat_ptr _T9;unsigned long _TA;unsigned long _TB;struct Cyc_Core_Invalid_argument_exn_struct*_TC;void*_TD;struct _fat_ptr _TE;unsigned char*_TF;void*_T10;struct _fat_ptr _T11;unsigned char*_T12;const void*_T13;unsigned long _T14;struct _fat_ptr _T15;_T0=d;_T1=_T0.curr;_T2=(void*)_T1;
 if(_T2==0)goto _TL145;else{goto _TL148;}_TL148: _T3=d;_T4=_get_fat_size(_T3,sizeof(void));_T5=n;if(_T4 < _T5)goto _TL145;else{goto _TL147;}_TL147: _T6=s;_T7=_T6.curr;_T8=(void*)_T7;if(_T8==0)goto _TL145;else{goto _TL146;}_TL146: _T9=s;_TA=_get_fat_size(_T9,sizeof(void));_TB=n;if(_TA < _TB)goto _TL145;else{goto _TL143;}
 _TL145:{struct Cyc_Core_Invalid_argument_exn_struct*_T16=_cycalloc(sizeof(struct Cyc_Core_Invalid_argument_exn_struct));_T16->tag=Cyc_Core_Invalid_argument;_T16->f1=_tag_fat("memcpy",sizeof(char),7U);_TC=(struct Cyc_Core_Invalid_argument_exn_struct*)_T16;}_TD=(void*)_TC;_throw(_TD);goto _TL144;_TL143: _TL144: _TE=d;_TF=_untag_fat_ptr_check_bound(_TE,sizeof(void),1U);_T10=(void*)_TF;_T11=s;_T12=_untag_fat_ptr_check_bound(_T11,sizeof(void),1U);_T13=(const void*)_T12;_T14=n * sz;
 memcpy(_T10,_T13,_T14);_T15=d;
 return _T15;}
 # 779
-struct _fat_ptr Cyc__memmove(struct _fat_ptr d,struct _fat_ptr s,unsigned long n,unsigned sz){struct _fat_ptr _T0;unsigned char*_T1;void*_T2;struct _fat_ptr _T3;unsigned _T4;unsigned long _T5;struct _fat_ptr _T6;unsigned char*_T7;void*_T8;struct _fat_ptr _T9;unsigned _TA;unsigned long _TB;struct Cyc_Core_Invalid_argument_exn_struct*_TC;void*_TD;struct _fat_ptr _TE;unsigned char*_TF;void*_T10;struct _fat_ptr _T11;unsigned char*_T12;const void*_T13;unsigned long _T14;struct _fat_ptr _T15;_T0=d;_T1=_T0.curr;_T2=(void*)_T1;
+struct _fat_ptr Cyc__memmove(struct _fat_ptr d,struct _fat_ptr s,unsigned long n,unsigned sz){struct _fat_ptr _T0;unsigned char*_T1;void*_T2;struct _fat_ptr _T3;unsigned long _T4;unsigned long _T5;struct _fat_ptr _T6;unsigned char*_T7;void*_T8;struct _fat_ptr _T9;unsigned long _TA;unsigned long _TB;struct Cyc_Core_Invalid_argument_exn_struct*_TC;void*_TD;struct _fat_ptr _TE;unsigned char*_TF;void*_T10;struct _fat_ptr _T11;unsigned char*_T12;const void*_T13;unsigned long _T14;struct _fat_ptr _T15;_T0=d;_T1=_T0.curr;_T2=(void*)_T1;
 if(_T2==0)goto _TL14B;else{goto _TL14E;}_TL14E: _T3=d;_T4=_get_fat_size(_T3,sizeof(void));_T5=n;if(_T4 < _T5)goto _TL14B;else{goto _TL14D;}_TL14D: _T6=s;_T7=_T6.curr;_T8=(void*)_T7;if(_T8==0)goto _TL14B;else{goto _TL14C;}_TL14C: _T9=s;_TA=_get_fat_size(_T9,sizeof(void));_TB=n;if(_TA < _TB)goto _TL14B;else{goto _TL149;}
 _TL14B:{struct Cyc_Core_Invalid_argument_exn_struct*_T16=_cycalloc(sizeof(struct Cyc_Core_Invalid_argument_exn_struct));_T16->tag=Cyc_Core_Invalid_argument;_T16->f1=_tag_fat("memove",sizeof(char),7U);_TC=(struct Cyc_Core_Invalid_argument_exn_struct*)_T16;}_TD=(void*)_TC;_throw(_TD);goto _TL14A;_TL149: _TL14A: _TE=d;_TF=_untag_fat_ptr_check_bound(_TE,sizeof(void),1U);_T10=(void*)_TF;_T11=s;_T12=_untag_fat_ptr_check_bound(_T11,sizeof(void),1U);_T13=(const void*)_T12;_T14=n * sz;
 memmove(_T10,_T13,_T14);_T15=d;
 return _T15;}
 # 786
-int Cyc_memcmp(struct _fat_ptr s1,struct _fat_ptr s2,unsigned long n){struct _fat_ptr _T0;unsigned char*_T1;char*_T2;struct _fat_ptr _T3;unsigned char*_T4;char*_T5;struct _fat_ptr _T6;unsigned _T7;unsigned long _T8;struct _fat_ptr _T9;unsigned _TA;unsigned long _TB;struct Cyc_Core_Invalid_argument_exn_struct*_TC;void*_TD;struct _fat_ptr _TE;unsigned char*_TF;const void*_T10;struct _fat_ptr _T11;unsigned char*_T12;const void*_T13;unsigned long _T14;int _T15;_T0=s1;_T1=_T0.curr;_T2=(char*)_T1;
+int Cyc_memcmp(struct _fat_ptr s1,struct _fat_ptr s2,unsigned long n){struct _fat_ptr _T0;unsigned char*_T1;char*_T2;struct _fat_ptr _T3;unsigned char*_T4;char*_T5;struct _fat_ptr _T6;unsigned long _T7;unsigned long _T8;struct _fat_ptr _T9;unsigned long _TA;unsigned long _TB;struct Cyc_Core_Invalid_argument_exn_struct*_TC;void*_TD;struct _fat_ptr _TE;unsigned char*_TF;const void*_T10;struct _fat_ptr _T11;unsigned char*_T12;const void*_T13;unsigned long _T14;int _T15;_T0=s1;_T1=_T0.curr;_T2=(char*)_T1;
 if(_T2==0)goto _TL151;else{goto _TL154;}_TL154: _T3=s2;_T4=_T3.curr;_T5=(char*)_T4;if(_T5==0)goto _TL151;else{goto _TL153;}_TL153: _T6=s1;_T7=_get_fat_size(_T6,sizeof(char));_T8=n;if(_T7 < _T8)goto _TL151;else{goto _TL152;}_TL152: _T9=s2;_TA=_get_fat_size(_T9,sizeof(char));_TB=n;if(_TA < _TB)goto _TL151;else{goto _TL14F;}
 _TL151:{struct Cyc_Core_Invalid_argument_exn_struct*_T16=_cycalloc(sizeof(struct Cyc_Core_Invalid_argument_exn_struct));_T16->tag=Cyc_Core_Invalid_argument;_T16->f1=_tag_fat("memcmp",sizeof(char),7U);_TC=(struct Cyc_Core_Invalid_argument_exn_struct*)_T16;}_TD=(void*)_TC;_throw(_TD);goto _TL150;_TL14F: _TL150: _TE=s1;_TF=_untag_fat_ptr_check_bound(_TE,sizeof(char),1U);_T10=(const void*)_TF;_T11=s2;_T12=_untag_fat_ptr_check_bound(_T11,sizeof(char),1U);_T13=(const void*)_T12;_T14=n;_T15=
 memcmp(_T10,_T13,_T14);return _T15;}
@@ -1057,18 +1057,18 @@ unsigned pval=(unsigned)_TF;
 unsigned delta=pval - sval;_T10=s;_T11=delta;_T12=(int)_T11;_T13=
 _fat_ptr_plus(_T10,sizeof(char),_T12);return _T13;}}}}}
 # 816
-struct _fat_ptr Cyc_memset(struct _fat_ptr s,char c,unsigned long n){struct _fat_ptr _T0;unsigned char*_T1;char*_T2;unsigned long _T3;struct _fat_ptr _T4;unsigned _T5;struct Cyc_Core_Invalid_argument_exn_struct*_T6;void*_T7;struct _fat_ptr _T8;unsigned char*_T9;char*_TA;void*_TB;char _TC;int _TD;unsigned long _TE;struct _fat_ptr _TF;_T0=s;_T1=_T0.curr;_T2=(char*)_T1;
+struct _fat_ptr Cyc_memset(struct _fat_ptr s,char c,unsigned long n){struct _fat_ptr _T0;unsigned char*_T1;char*_T2;unsigned long _T3;struct _fat_ptr _T4;unsigned long _T5;struct Cyc_Core_Invalid_argument_exn_struct*_T6;void*_T7;struct _fat_ptr _T8;unsigned char*_T9;char*_TA;void*_TB;char _TC;int _TD;unsigned long _TE;struct _fat_ptr _TF;_T0=s;_T1=_T0.curr;_T2=(char*)_T1;
 if(_T2==0)goto _TL163;else{goto _TL164;}_TL164: _T3=n;_T4=s;_T5=_get_fat_size(_T4,sizeof(char));if(_T3 > _T5)goto _TL163;else{goto _TL161;}
 _TL163:{struct Cyc_Core_Invalid_argument_exn_struct*_T10=_cycalloc(sizeof(struct Cyc_Core_Invalid_argument_exn_struct));_T10->tag=Cyc_Core_Invalid_argument;_T10->f1=_tag_fat("memset",sizeof(char),7U);_T6=(struct Cyc_Core_Invalid_argument_exn_struct*)_T10;}_T7=(void*)_T6;_throw(_T7);goto _TL162;_TL161: _TL162: _T8=s;_T9=_untag_fat_ptr_check_bound(_T8,sizeof(char),1U);_TA=(char*)_T9;_TB=(void*)_TA;_TC=c;_TD=(int)_TC;_TE=n;
 memset(_TB,_TD,_TE);_TF=s;
 return _TF;}
 # 823
-void Cyc_bzero(struct _fat_ptr s,unsigned long n){struct _fat_ptr _T0;unsigned char*_T1;char*_T2;struct _fat_ptr _T3;unsigned _T4;unsigned long _T5;struct Cyc_Core_Invalid_argument_exn_struct*_T6;void*_T7;void(*_T8)(char*,unsigned long);void(*_T9)(void*,unsigned long);struct _fat_ptr _TA;unsigned char*_TB;char*_TC;unsigned long _TD;_T0=s;_T1=_T0.curr;_T2=(char*)_T1;
+void Cyc_bzero(struct _fat_ptr s,unsigned long n){struct _fat_ptr _T0;unsigned char*_T1;char*_T2;struct _fat_ptr _T3;unsigned long _T4;unsigned long _T5;struct Cyc_Core_Invalid_argument_exn_struct*_T6;void*_T7;void(*_T8)(char*,unsigned long);void(*_T9)(void*,unsigned long);struct _fat_ptr _TA;unsigned char*_TB;char*_TC;unsigned long _TD;_T0=s;_T1=_T0.curr;_T2=(char*)_T1;
 if(_T2==0)goto _TL167;else{goto _TL168;}_TL168: _T3=s;_T4=_get_fat_size(_T3,sizeof(char));_T5=n;if(_T4 < _T5)goto _TL167;else{goto _TL165;}
 _TL167:{struct Cyc_Core_Invalid_argument_exn_struct*_TE=_cycalloc(sizeof(struct Cyc_Core_Invalid_argument_exn_struct));_TE->tag=Cyc_Core_Invalid_argument;_TE->f1=_tag_fat("bzero",sizeof(char),6U);_T6=(struct Cyc_Core_Invalid_argument_exn_struct*)_TE;}_T7=(void*)_T6;_throw(_T7);goto _TL166;_TL165: _TL166: _T9=bzero;{
 void(*_TE)(char*,unsigned long)=(void(*)(char*,unsigned long))_T9;_T8=_TE;}_TA=s;_TB=_untag_fat_ptr_check_bound(_TA,sizeof(char),1U);_TC=(char*)_TB;_TD=n;_T8(_TC,_TD);}
 # 829
-void Cyc__bcopy(struct _fat_ptr src,struct _fat_ptr dst,unsigned long n,unsigned sz){struct _fat_ptr _T0;unsigned char*_T1;void*_T2;struct _fat_ptr _T3;unsigned _T4;unsigned long _T5;struct _fat_ptr _T6;unsigned char*_T7;void*_T8;struct _fat_ptr _T9;unsigned _TA;unsigned long _TB;struct Cyc_Core_Invalid_argument_exn_struct*_TC;void*_TD;struct _fat_ptr _TE;unsigned char*_TF;const void*_T10;struct _fat_ptr _T11;unsigned char*_T12;void*_T13;unsigned long _T14;_T0=src;_T1=_T0.curr;_T2=(void*)_T1;
+void Cyc__bcopy(struct _fat_ptr src,struct _fat_ptr dst,unsigned long n,unsigned sz){struct _fat_ptr _T0;unsigned char*_T1;void*_T2;struct _fat_ptr _T3;unsigned long _T4;unsigned long _T5;struct _fat_ptr _T6;unsigned char*_T7;void*_T8;struct _fat_ptr _T9;unsigned long _TA;unsigned long _TB;struct Cyc_Core_Invalid_argument_exn_struct*_TC;void*_TD;struct _fat_ptr _TE;unsigned char*_TF;const void*_T10;struct _fat_ptr _T11;unsigned char*_T12;void*_T13;unsigned long _T14;_T0=src;_T1=_T0.curr;_T2=(void*)_T1;
 if(_T2==0)goto _TL16B;else{goto _TL16E;}_TL16E: _T3=src;_T4=_get_fat_size(_T3,sizeof(void));_T5=n;if(_T4 < _T5)goto _TL16B;else{goto _TL16D;}_TL16D: _T6=dst;_T7=_T6.curr;_T8=(void*)_T7;if(_T8==0)goto _TL16B;else{goto _TL16C;}_TL16C: _T9=dst;_TA=_get_fat_size(_T9,sizeof(void));_TB=n;if(_TA < _TB)goto _TL16B;else{goto _TL169;}
 _TL16B:{struct Cyc_Core_Invalid_argument_exn_struct*_T15=_cycalloc(sizeof(struct Cyc_Core_Invalid_argument_exn_struct));_T15->tag=Cyc_Core_Invalid_argument;_T15->f1=_tag_fat("bcopy",sizeof(char),6U);_TC=(struct Cyc_Core_Invalid_argument_exn_struct*)_T15;}_TD=(void*)_TC;_throw(_TD);goto _TL16A;_TL169: _TL16A: _TE=src;_TF=_untag_fat_ptr_check_bound(_TE,sizeof(void),1U);_T10=(const void*)_TF;_T11=dst;_T12=_untag_fat_ptr_check_bound(_T11,sizeof(void),1U);_T13=(void*)_T12;_T14=n * sz;
 bcopy(_T10,_T13,_T14);}

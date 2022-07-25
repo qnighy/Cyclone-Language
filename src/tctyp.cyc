@@ -934,7 +934,7 @@ static cvtenv_t i_check_type(cvtenv_t env, kind_t expected_kind, type_t t,
     // int foo<`i::I>(int *{valueof(`i)}`H x);
     // then the explicitly bound `i doesn't work out.
     Tcexp::tcExp(Tcenv::allow_valueof(te),NULL,e);
-    if (!coerce_uint_type(e))
+    if (!coerce_ulong_type(e))
       err2(loc,"valueof_t requires an int expression");
     env = i_check_type_level_exp(e,env);
     break;
@@ -967,7 +967,7 @@ static cvtenv_t i_check_type(cvtenv_t env, kind_t expected_kind, type_t t,
       *eptr = e = uint_exp(1,0);
     }
     Tcexp::tcExp(Tcenv::allow_valueof(te),NULL,e);
-    if (!coerce_uint_type(e))
+    if (!coerce_ulong_type(e))
       err2(loc,"array bounds expression is not an unsigned int");
     env = i_check_type_level_exp(e,env);
     let $(sz,known) = Evexp::eval_const_uint_exp(e);

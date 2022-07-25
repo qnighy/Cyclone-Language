@@ -244,7 +244,7 @@ static type_t tcConst(tenv_t te, seg_t loc, type_t * topt, cnst_t *c, exp_t e){
       string_elt_typ = wchar_type();
     }
     exp_t elen = const_exp(Int_c(Unsigned, string_numelts), loc);
-    elen->topt = uint_type;
+    elen->topt = ulong_type;
     // The default is to treat a string as if it's statically heap
     // allocated and return a pointer to that string.  However, if the
     // string is used as an initializer, then we should return an array type.
@@ -387,7 +387,7 @@ static type_t tcUnPrimop(tenv_t te, seg_t loc, type_t * topt,
       break;
     default: Warn::err2(loc,"numelts requires pointer type, not ",t);
     }
-    return uint_type;
+    return ulong_type;
   case Tagof:
     // should have a @thin@numelts(1)@nozeroterm pointer to a datatype 
     // or datatype field -- otherwise similar to a Deref_e.
@@ -514,7 +514,7 @@ static type_t tcMinus(tenv_t te, type_t *topt, exp_t e1, exp_t e2) {
   
   if(!is_pointer_type(t1)) {
     if(is_pointer_type(t2))
-      unchecked_cast(e2, sint_type, Other_coercion);
+      unchecked_cast(e2, slong_type, Other_coercion);
     return tcArithBinop(te, e1, e2, is_numeric);	
   }
   
@@ -538,9 +538,9 @@ static type_t tcMinus(tenv_t te, type_t *topt, exp_t e1, exp_t e2) {
 									    thinconst())))) {
 	Warn::err2(e1->loc, "Expected thin pointer type but got ", t2);
       }
-      unchecked_cast(e1, sint_type, Other_coercion);
-      unchecked_cast(e2, sint_type, Other_coercion);
-      return sint_type;
+      unchecked_cast(e1, slong_type, Other_coercion);
+      unchecked_cast(e2, slong_type, Other_coercion);
+      return slong_type;
     }
   }
   //both are pointers -- the result must be arithmetic
@@ -560,7 +560,7 @@ static type_t tcMinus(tenv_t te, type_t *topt, exp_t e1, exp_t e2) {
 
   //(fat - thin), or (thin - fat) requires coercing the fat to a thin
   if(!(is_fat_pointer_type(t1) ^ is_fat_pointer_type(t2)))
-    return sint_type;
+    return slong_type;
 
   if(is_fat_pointer_type(t1)) {
     unchecked_cast(e1, star_type(pointer_elt_type(t1),
@@ -575,7 +575,7 @@ static type_t tcMinus(tenv_t te, type_t *topt, exp_t e1, exp_t e2) {
 		   Other_coercion);
   }
   
-  return sint_type;
+  return slong_type;
 }
 
 static type_t tcCmpBinop(tenv_t te, seg_t loc, exp_t e1, exp_t e2) {
@@ -1598,19 +1598,19 @@ static type_t tcSizeof(tenv_t te, seg_t loc, type_t * topt, type_t t) {
   // if we're inside a type-level expression that means
   // we shouldn't check the type yet -- it will be done later
   if (te->allow_valueof)
-    return uint_type;
+    return ulong_type;
   check_type(loc,te,lookup_type_vars(te),&Kinds::mk,true,false,t);
   check_no_qual(loc,t);
   if(!Evexp::okay_szofarg(t))
     Warn::err2(loc,"sizeof applied to type ",t," which has unknown size here");
   if (topt==NULL)
-    return uint_type;
+    return ulong_type;
   switch (compress(*topt)) {
   case &AppType(&TagCon,&List{tt,_}):
     if (Unify::unify(tt,new ValueofType(sizeoftype_exp(t,0)))) 
       return compress(*topt);
-    return uint_type;
-  default: return uint_type;
+    return ulong_type;
+  default: return ulong_type;
   }
 }
 
@@ -1619,19 +1619,19 @@ static type_t tcAlignof(tenv_t te, seg_t loc, type_t * topt, type_t t) {
   // if we're inside a type-level expression that means
   // we shouldn't check the type yet -- it will be done later
   if (te->allow_valueof)
-    return uint_type;
+    return ulong_type;
   check_type(loc,te,lookup_type_vars(te),&Kinds::mk,true,false,t);
   check_no_qual(loc,t);
   if(!Evexp::okay_szofarg(t))
     Warn::err2(loc,"__alignof__ applied to type ",t," which has unknown size here");
   if (topt==NULL)
-    return uint_type;
+    return ulong_type;
   switch (compress(*topt)) {
   case &AppType(&TagCon,&List{tt,_}):
     if (Unify::unify(tt,new ValueofType(alignoftype_exp(t,0)))) 
       return compress(*topt);
-    return uint_type;
-  default: return uint_type;
+    return ulong_type;
+  default: return ulong_type;
   }
 }
 
@@ -1684,7 +1684,7 @@ static type_t tcOffsetof(tenv_t te, seg_t loc, type_t * topt,
       break;
     }
   }
-  return uint_type;
+  return ulong_type;
 }
 
  // *e
@@ -1927,7 +1927,7 @@ static type_t tcArray(tenv_t te, seg_t loc, type_t *elt_topt,
     if (!Tcutil::is_zero(e))
       Warn::err(e->loc,"zero-terminated array doesn't end with zero.");
   }
-  sz_exp->topt = uint_type;
+  sz_exp->topt = ulong_type;
   res_t2 = array_type(res,
 		     (elt_tqopt?(*elt_tqopt):(empty_tqual(0))),
 		     sz_exp, zero_term ? true_type : false_type,0);
@@ -1983,13 +1983,13 @@ static type_t tcComprehension(tenv_t te, seg_t loc, type_t * topt,
     // if we are in a new aggregate, then transitively we can update
     // the bounds to be the tag, to allow variable-length arrays
     if (new_status(te) == InNewAggr) {
-      let b = cast_exp(uint_type,valueof_exp(t,0),false,No_coercion,0);
+      let b = cast_exp(ulong_type,valueof_exp(t,0),false,No_coercion,0);
       b->topt = bound->topt;
       bound = b;
     }
     break;
   default:
-    if (!coerce_uint_type(bound))
+    if (!coerce_ulong_type(bound))
       Warn::err2(bound->loc,"expecting unsigned int, found ",bound->topt);
   }
   // double-check that the index variable x is declared const
@@ -2014,8 +2014,8 @@ static type_t tcComprehension(tenv_t te, seg_t loc, type_t * topt,
   }
   if (ztopt != NULL && force_type2bool(false,*ztopt)) {
     //for zero-terminated arrays, the result is 1 larger due to the implicit 0
-    let e1 = uint_exp(1,0); e1->topt = uint_type;
-    bound = add_exp(bound,e1,0); bound->topt = uint_type;
+    let e1 = uint_exp(1,0); e1->topt = ulong_type;
+    bound = add_exp(bound,e1,0); bound->topt = ulong_type;
     *is_zero_term = true;
   }
   check_consume(body->loc,curr_aquals_bounds(te),(type_t)body->topt,body);
@@ -2034,13 +2034,13 @@ static type_t tcComprehensionNoinit(tenv_t te, seg_t loc, type_t * topt,
     // if we are in a new aggregate, then transitively we can update
     // the bounds to be the tag, to allow variable-length arrays
     if (new_status(te) == InNewAggr) {
-      let b = cast_exp(uint_type,valueof_exp(t,0),false,No_coercion,0);
+      let b = cast_exp(ulong_type,valueof_exp(t,0),false,No_coercion,0);
       b->topt = bound->topt;
       bound = b;
     }
     break;
   default:
-    if (!coerce_uint_type(bound))
+    if (!coerce_ulong_type(bound))
       Warn::err2(bound->loc,"expecting unsigned int, found ",bound->topt);
   }
   let $(topt2,tqopt,ztopt) = ptrEltAtts(topt);
@@ -2434,7 +2434,7 @@ static type_t tcMalloc(tenv_t te, seg_t loc, type_t * topt, exp_opt_t @ropt, exp
     }
   }
   
-  tcExp(clear_abstract_val_ok(te),&uint_type,*e);
+  tcExp(clear_abstract_val_ok(te),&ulong_type,*e);
   // crawl over e and look for the following cases:
   //   sizeof(T):  result is T@ or T* depending upon topt
   //   sizeof(T)*n or n*sizeof(T):
@@ -2465,7 +2465,7 @@ static type_t tcMalloc(tenv_t te, seg_t loc, type_t * topt, exp_opt_t @ropt, exp
       elt_type = t2;
       *t = new elt_type;
       num_elts = uint_exp(1,0);
-      tcExp(te,&uint_type,num_elts);
+      tcExp(te,&ulong_type,num_elts);
       one_elt = true;
       break;
     case &Primop_e(Times,&List(e1,&List(e2,NULL))):

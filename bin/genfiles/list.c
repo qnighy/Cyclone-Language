@@ -780,9 +780,9 @@ x=_T4->tl;goto _TLD5;_TLD4:
 # 507
  return 0;}
 # 510
-void*Cyc_List_find_c(void*(*pred)(void*,void*),void*env,struct Cyc_List_List*x){void*_T0;struct Cyc_List_List*_T1;void*_T2;void*_T3;unsigned _T4;void*_T5;struct Cyc_List_List*_T6;
+void*Cyc_List_find_c(void*(*pred)(void*,void*),void*env,struct Cyc_List_List*x){void*_T0;struct Cyc_List_List*_T1;void*_T2;void*_T3;unsigned long _T4;void*_T5;struct Cyc_List_List*_T6;
 _TLDB: if(x!=0)goto _TLD9;else{goto _TLDA;}
-_TLD9: _T0=env;_T1=x;_T2=_T1->hd;{void*v=pred(_T0,_T2);_T3=v;_T4=(unsigned)_T3;
+_TLD9: _T0=env;_T1=x;_T2=_T1->hd;{void*v=pred(_T0,_T2);_T3=v;_T4=(unsigned long)_T3;
 if(!_T4)goto _TLDC;_T5=v;return _T5;_TLDC:;}_T6=x;
 # 511
 x=_T6->tl;goto _TLDB;_TLDA:
@@ -976,8 +976,8 @@ _T7->v=hd;_T6=(struct Cyc_Core_Opt*)_T7;}return _T6;_TL137:;}goto _TL134;_TL136:
 # 729
  return 0;}
 # 733
-struct _fat_ptr Cyc_List_rto_array(struct _RegionHandle*r2,struct Cyc_List_List*x){struct _fat_ptr _T0;int _T1;void**_T2;struct _RegionHandle*_T3;unsigned _T4;unsigned _T5;void*_T6;struct Cyc_List_List*_T7;struct Cyc_List_List*_T8;
-int s=Cyc_List_length(x);_T1=s;{unsigned _T9=(unsigned)_T1;_T3=r2;_T4=_check_times(_T9,sizeof(void*));{void**_TA=_region_malloc(_T3,0U,_T4);{unsigned _TB=_T9;unsigned i;i=0;_TL13C: if(i < _TB)goto _TL13A;else{goto _TL13B;}_TL13A: _T5=i;_T7=
+struct _fat_ptr Cyc_List_rto_array(struct _RegionHandle*r2,struct Cyc_List_List*x){struct _fat_ptr _T0;int _T1;void**_T2;struct _RegionHandle*_T3;unsigned long _T4;unsigned long _T5;void*_T6;struct Cyc_List_List*_T7;struct Cyc_List_List*_T8;
+int s=Cyc_List_length(x);_T1=s;{unsigned long _T9=(unsigned long)_T1;_T3=r2;_T4=_check_times(_T9,sizeof(void*));{void**_TA=_region_malloc(_T3,0U,_T4);{unsigned long _TB=_T9;unsigned long i;i=0;_TL13C: if(i < _TB)goto _TL13A;else{goto _TL13B;}_TL13A: _T5=i;_T7=
 _check_null(x);{void*v=_T7->hd;_T8=x;x=_T8->tl;_T6=v;}_TA[_T5]=_T6;i=i + 1;goto _TL13C;_TL13B:;}_T2=(void**)_TA;}_T0=_tag_fat(_T2,sizeof(void*),_T9);}return _T0;}
 # 738
 struct _fat_ptr Cyc_List_to_array(struct Cyc_List_List*x){struct _fat_ptr _T0;_T0=

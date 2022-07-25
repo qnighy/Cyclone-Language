@@ -364,7 +364,7 @@ type_t thin_bounds_exp(exp_t e) {
 }
 type_t thin_bounds_int(unsigned int i) {
   exp_t e = uint_exp(i,0);
-  e->topt = uint_type;
+  e->topt = ulong_type;
   return thin_bounds_exp(e);
 }
 type_t bounds_one() {

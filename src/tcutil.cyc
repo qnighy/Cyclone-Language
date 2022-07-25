@@ -1770,7 +1770,7 @@ bool coerce_list(aqualbnds_t aqb, type_t t, list_t<exp_t> es) {
 bool coerce_to_bool(exp_t e) {
   if (!coerce_sint_type(e))
     switch (compress((type_t)e->topt)) {
-    case &PointerType(_): unchecked_cast(e,uint_type,Other_coercion); break;
+    case &PointerType(_): unchecked_cast(e,ulong_type,Other_coercion); break;
     default: return false;
     }
   return true;
@@ -1789,8 +1789,8 @@ static bool coerce_Xint_type(type_t Xint_type, exp_t e) {
   return false;
 }
 // coerce e to have type unsigned int -- used in subscript
-bool coerce_uint_type(exp_t e) {
-  return coerce_Xint_type(uint_type,e);
+bool coerce_ulong_type(exp_t e) {
+  return coerce_Xint_type(ulong_type,e);
 }
 // coerce e to have type [signed] int -- used in coercions to "bool"
 bool coerce_sint_type(exp_t e) {
@@ -1816,7 +1816,7 @@ exp_t get_thin_bound(list_t<type_t> ts) {
   case &ValueofType(e): return e;
   default: 
     let v = valueof_exp(t,0);
-    v->topt = uint_type;
+    v->topt = ulong_type;
     return v;
   }
 }
@@ -3319,7 +3319,7 @@ type_t promote_array(type_t t, type_t rgn, aqualtype_t aqual, bool convert_tag) 
 	Warn::impos2("cannot convert tag without type!");
       switch(compress((type_t)eopt->topt)) {
       case &AppType(&TagCon,&List{t,_}):
-	//b = thin_bounds_exp(cast_exp(uint_type,valueof_exp(t,0),false,No_coercion,0));
+	//b = thin_bounds_exp(cast_exp(ulong_type,valueof_exp(t,0),false,No_coercion,0));
 	b = thin_bounds_exp(valueof_exp(t,0));
 	break;
       default: b = is_const_exp(eopt) ? thin_bounds_exp(eopt) : fat_bound_type;

@@ -2441,7 +2441,7 @@ array_initializer:
 | '{' initializer_list ',' '}'
     { $$=^$(new_exp(new UnresolvedMem_e(NULL,List::imp_rev($2)),LOC(@1,@4))); }
 | '{' FOR IDENTIFIER '<' expression ':' expression '}'
-    { let vd = new_vardecl(SLOC(@3),new $(Loc_n(),new $3), uint_type,
+    { let vd = new_vardecl(SLOC(@3),new $(Loc_n(),new $3), ulong_type,
                            uint_exp(0,SLOC(@3)),NULL);
       // make the index variable const
       vd->tq.real_const = true;

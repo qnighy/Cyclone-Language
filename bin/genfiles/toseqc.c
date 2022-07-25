@@ -407,15 +407,15 @@ static struct _fat_ptr Cyc_Toseqc_pure_funs[9U]={{(unsigned char*)_TmpG0,(unsign
 # 62
 static struct _fat_ptr Cyc_Toseqc_exn_effect_funs[7U]={{(unsigned char*)_TmpG9,(unsigned char*)_TmpG9,(unsigned char*)_TmpG9 + 12U},{(unsigned char*)_TmpGA,(unsigned char*)_TmpGA,(unsigned char*)_TmpGA + 28U},{(unsigned char*)_TmpGB,(unsigned char*)_TmpGB,(unsigned char*)_TmpGB + 31U},{(unsigned char*)_TmpGC,(unsigned char*)_TmpGC,(unsigned char*)_TmpGC + 21U},{(unsigned char*)_TmpGD,(unsigned char*)_TmpGD,(unsigned char*)_TmpGD + 19U},{(unsigned char*)_TmpGE,(unsigned char*)_TmpGE,(unsigned char*)_TmpGE + 15U},{(unsigned char*)_TmpGF,(unsigned char*)_TmpGF,(unsigned char*)_TmpGF + 15U}};
 # 71
-static enum Cyc_Toseqc_SideEffect Cyc_Toseqc_fun_effect(struct _tuple1*qv){struct _tuple1*_T0;struct _tuple1*_T1;union Cyc_Absyn_Nmspace _T2;struct _union_Nmspace_Loc_n _T3;unsigned _T4;struct _tuple1*_T5;int _T6;unsigned _T7;struct _fat_ptr*_T8;int _T9;struct _fat_ptr _TA;struct _fat_ptr*_TB;struct _fat_ptr _TC;int _TD;int _TE;unsigned _TF;struct _fat_ptr*_T10;int _T11;struct _fat_ptr _T12;struct _fat_ptr*_T13;struct _fat_ptr _T14;int _T15;struct _fat_ptr*_T16;_T0=qv;_T1=(struct _tuple1*)_T0;_T2=_T1->f0;_T3=_T2.Loc_n;_T4=_T3.tag;if(_T4!=4)goto _TL12;_T5=qv;{struct _tuple1 _T17=*_T5;_T16=_T17.f1;}{struct _fat_ptr*fn=_T16;{
+static enum Cyc_Toseqc_SideEffect Cyc_Toseqc_fun_effect(struct _tuple1*qv){struct _tuple1*_T0;struct _tuple1*_T1;union Cyc_Absyn_Nmspace _T2;struct _union_Nmspace_Loc_n _T3;unsigned _T4;struct _tuple1*_T5;int _T6;unsigned long _T7;struct _fat_ptr*_T8;int _T9;struct _fat_ptr _TA;struct _fat_ptr*_TB;struct _fat_ptr _TC;int _TD;int _TE;unsigned long _TF;struct _fat_ptr*_T10;int _T11;struct _fat_ptr _T12;struct _fat_ptr*_T13;struct _fat_ptr _T14;int _T15;struct _fat_ptr*_T16;_T0=qv;_T1=(struct _tuple1*)_T0;_T2=_T1->f0;_T3=_T2.Loc_n;_T4=_T3.tag;if(_T4!=4)goto _TL12;_T5=qv;{struct _tuple1 _T17=*_T5;_T16=_T17.f1;}{struct _fat_ptr*fn=_T16;{
 # 74
-int i=0;_TL17: _T6=i;_T7=(unsigned)_T6;if(_T7 < 9U)goto _TL15;else{goto _TL16;}
+int i=0;_TL17: _T6=i;_T7=(unsigned long)_T6;if(_T7 < 9U)goto _TL15;else{goto _TL16;}
 _TL15: _T8=Cyc_Toseqc_pure_funs;_T9=i;_TA=_T8[_T9];_TB=fn;_TC=*_TB;_TD=Cyc_strcmp(_TA,_TC);if(_TD)goto _TL18;else{goto _TL1A;}
 _TL1A: return 1U;_TL18:
 # 74
  i=i + 1;goto _TL17;_TL16:;}{
 # 77
-int i=0;_TL1E: _TE=i;_TF=(unsigned)_TE;if(_TF < 7U)goto _TL1C;else{goto _TL1D;}
+int i=0;_TL1E: _TE=i;_TF=(unsigned long)_TE;if(_TF < 7U)goto _TL1C;else{goto _TL1D;}
 _TL1C: _T10=Cyc_Toseqc_exn_effect_funs;_T11=i;_T12=_T10[_T11];_T13=fn;_T14=*_T13;_T15=Cyc_strcmp(_T12,_T14);if(_T15)goto _TL1F;else{goto _TL21;}
 _TL21: return 2U;_TL1F:
 # 77
@@ -485,7 +485,7 @@ Cyc_Toseqc_stmt_effect(s);return _T21;}default:{
 # 162
 int(*_T29)(struct Cyc_Absyn_Exp*)=(int(*)(struct Cyc_Absyn_Exp*))Cyc_Toseqc_unexpected_form;_T22=_T29;}_T22(e);};}}
 # 165
-static enum Cyc_Toseqc_SideEffect Cyc_Toseqc_stmt_effect(struct Cyc_Absyn_Stmt*s){struct Cyc_Absyn_Stmt*_T0;int*_T1;unsigned _T2;enum Cyc_Toseqc_SideEffect _T3;enum Cyc_Toseqc_SideEffect _T4;enum Cyc_Toseqc_SideEffect _T5;enum Cyc_Toseqc_SideEffect _T6;enum Cyc_Toseqc_SideEffect _T7;enum Cyc_Toseqc_SideEffect _T8;struct Cyc_Absyn_Decl*_T9;int*_TA;int _TB;struct Cyc_Absyn_Vardecl*_TC;struct Cyc_Absyn_Exp*_TD;unsigned _TE;enum Cyc_Toseqc_SideEffect _TF;struct Cyc_Absyn_Vardecl*_T10;struct Cyc_Absyn_Exp*_T11;enum Cyc_Toseqc_SideEffect _T12;struct Cyc_Warn_String_Warn_Warg_struct _T13;int(*_T14)(struct _fat_ptr);void*(*_T15)(struct _fat_ptr);struct _fat_ptr _T16;
+static enum Cyc_Toseqc_SideEffect Cyc_Toseqc_stmt_effect(struct Cyc_Absyn_Stmt*s){struct Cyc_Absyn_Stmt*_T0;int*_T1;unsigned _T2;enum Cyc_Toseqc_SideEffect _T3;enum Cyc_Toseqc_SideEffect _T4;enum Cyc_Toseqc_SideEffect _T5;enum Cyc_Toseqc_SideEffect _T6;enum Cyc_Toseqc_SideEffect _T7;enum Cyc_Toseqc_SideEffect _T8;struct Cyc_Absyn_Decl*_T9;int*_TA;int _TB;struct Cyc_Absyn_Vardecl*_TC;struct Cyc_Absyn_Exp*_TD;unsigned long _TE;enum Cyc_Toseqc_SideEffect _TF;struct Cyc_Absyn_Vardecl*_T10;struct Cyc_Absyn_Exp*_T11;enum Cyc_Toseqc_SideEffect _T12;struct Cyc_Warn_String_Warn_Warg_struct _T13;int(*_T14)(struct _fat_ptr);void*(*_T15)(struct _fat_ptr);struct _fat_ptr _T16;
 enum Cyc_Toseqc_SideEffect res=0U;
 _TL2C: if(1)goto _TL2D;else{goto _TL2E;}
 _TL2D: _T0=s;{void*_T17=_T0->r;struct Cyc_Absyn_Decl*_T18;struct Cyc_Absyn_Stmt*_T19;struct Cyc_Absyn_Stmt*_T1A;struct Cyc_Absyn_Exp*_T1B;_T1=(int*)_T17;_T2=*_T1;switch(_T2){case 0: _T3=res;
@@ -497,7 +497,7 @@ s=s2;goto _TL2C;}case 2:{struct Cyc_Absyn_Seq_s_Absyn_Raw_stmt_struct*_T1C=(stru
 Cyc_Toseqc_stmt_effect(s1);res=Cyc_Toseqc_join_side_effect(_T7,_T8);
 s=s2;goto _TL2C;}case 12:{struct Cyc_Absyn_Decl_s_Absyn_Raw_stmt_struct*_T1C=(struct Cyc_Absyn_Decl_s_Absyn_Raw_stmt_struct*)_T17;_T18=_T1C->f1;_T1A=_T1C->f2;}{struct Cyc_Absyn_Decl*d=_T18;struct Cyc_Absyn_Stmt*s1=_T1A;_T9=d;{
 # 179
-void*_T1C=_T9->r;struct Cyc_Absyn_Vardecl*_T1D;_TA=(int*)_T1C;_TB=*_TA;if(_TB!=0)goto _TL30;{struct Cyc_Absyn_Var_d_Absyn_Raw_decl_struct*_T1E=(struct Cyc_Absyn_Var_d_Absyn_Raw_decl_struct*)_T1C;_T1D=_T1E->f1;}{struct Cyc_Absyn_Vardecl*vd=_T1D;_TC=vd;_TD=_TC->initializer;_TE=(unsigned)_TD;
+void*_T1C=_T9->r;struct Cyc_Absyn_Vardecl*_T1D;_TA=(int*)_T1C;_TB=*_TA;if(_TB!=0)goto _TL30;{struct Cyc_Absyn_Var_d_Absyn_Raw_decl_struct*_T1E=(struct Cyc_Absyn_Var_d_Absyn_Raw_decl_struct*)_T1C;_T1D=_T1E->f1;}{struct Cyc_Absyn_Vardecl*vd=_T1D;_TC=vd;_TD=_TC->initializer;_TE=(unsigned long)_TD;
 # 181
 if(!_TE)goto _TL32;_TF=res;_T10=vd;_T11=_T10->initializer;_T12=
 Cyc_Toseqc_exp_effect(_T11);res=Cyc_Toseqc_join_side_effect(_TF,_T12);goto _TL33;_TL32: _TL33:

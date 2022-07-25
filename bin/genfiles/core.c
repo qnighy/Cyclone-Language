@@ -348,22 +348,22 @@ void _profile_free_region(struct _RegionHandle*,const char*,const char*,int);
 # 132 "core.h"
 struct _RegionHandle*Cyc_Core_current_handle (void);extern char Cyc_Core_Not_found[10U];struct Cyc_Core_Not_found_exn_struct{char*tag;};
 # 180
-extern unsigned Cyc_Core_unique_qual;
+extern unsigned long Cyc_Core_unique_qual;
 # 220 "core.h"
 struct _fat_ptr Cyc_Core_autorelease_handle(struct _RegionHandle*,struct _fat_ptr);struct Cyc_Core_ThinRes{void*arr;unsigned nelts;};char Cyc_Core_Invalid_argument[17U]="Invalid_argument";char Cyc_Core_SysError[9U]="SysError";char Cyc_Core_Failure[8U]="Failure";char Cyc_Core_Impossible[11U]="Impossible";char Cyc_Core_Not_found[10U]="Not_found";
 # 31 "core.cyc"
 struct Cyc_Core_Not_found_exn_struct Cyc_Core_Not_found_val={Cyc_Core_Not_found};char Cyc_Core_Unreachable[12U]="Unreachable";
 # 34
-struct Cyc_Core_Opt*Cyc_Core_opt_map(void*(*f)(void*),struct Cyc_Core_Opt*o){struct Cyc_Core_Opt*_T0;struct Cyc_Core_Opt*_T1;unsigned _T2;struct Cyc_Core_Opt*_T3;void*_T4;
+struct Cyc_Core_Opt*Cyc_Core_opt_map(void*(*f)(void*),struct Cyc_Core_Opt*o){struct Cyc_Core_Opt*_T0;struct Cyc_Core_Opt*_T1;unsigned long _T2;struct Cyc_Core_Opt*_T3;void*_T4;
 if(o!=0)goto _TL0;_T0=0;goto _TL1;_TL0: _T2=Cyc_Core_unique_qual;{struct Cyc_Core_Opt*_T5=_aqual_malloc(_T2,sizeof(struct Cyc_Core_Opt));_T3=o;_T4=_T3->v;_T5->v=f(_T4);_T1=(struct Cyc_Core_Opt*)_T5;}_T0=_T1;_TL1: return _T0;}
 # 38
-struct _fat_ptr Cyc_Core_new_string(unsigned i){struct _fat_ptr _T0;void*_T1;{unsigned _T2=i;_T1=_cyccalloc_atomic(sizeof(char),_T2);_T0=_tag_fat(_T1,sizeof(char),_T2);}
+struct _fat_ptr Cyc_Core_new_string(unsigned i){struct _fat_ptr _T0;void*_T1;{unsigned long _T2=i;_T1=_cyccalloc_atomic(sizeof(char),_T2);_T0=_tag_fat(_T1,sizeof(char),_T2);}
 return _T0;}
 # 42
-struct _fat_ptr Cyc_Core_rnew_string(struct _RegionHandle*r,unsigned i){struct _fat_ptr _T0;struct _RegionHandle*_T1;void*_T2;{unsigned _T3=i;_T1=r;_T2=_region_calloc(_T1,0U,sizeof(char),_T3);_T0=_tag_fat(_T2,sizeof(char),_T3);}
+struct _fat_ptr Cyc_Core_rnew_string(struct _RegionHandle*r,unsigned i){struct _fat_ptr _T0;struct _RegionHandle*_T1;void*_T2;{unsigned long _T3=i;_T1=r;_T2=_region_calloc(_T1,0U,sizeof(char),_T3);_T0=_tag_fat(_T2,sizeof(char),_T3);}
 return _T0;}
 # 45
-struct _fat_ptr Cyc_Core_rqnew_string(struct _RegionHandle*r,unsigned q,unsigned i){struct _fat_ptr _T0;struct _RegionHandle*_T1;unsigned _T2;void*_T3;{unsigned _T4=i;_T1=r;_T2=q;_T3=_region_calloc(_T1,_T2,sizeof(char),_T4);_T0=_tag_fat(_T3,sizeof(char),_T4);}
+struct _fat_ptr Cyc_Core_rqnew_string(struct _RegionHandle*r,unsigned long q,unsigned i){struct _fat_ptr _T0;struct _RegionHandle*_T1;unsigned long _T2;void*_T3;{unsigned long _T4=i;_T1=r;_T2=q;_T3=_region_calloc(_T1,_T2,sizeof(char),_T4);_T0=_tag_fat(_T3,sizeof(char),_T4);}
 return _T0;}
 # 49
 int Cyc_Core_true_f(void*x){return 1;}

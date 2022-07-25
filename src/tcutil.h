@@ -98,7 +98,7 @@ exp_t deep_copy_exp(bool preserve_types, exp_t);
 type_t fd_type(fndecl_t); 
 kind_t type_kind(type_t);
 void unchecked_cast(exp_t, type_t, coercion_t);
-bool coerce_uint_type(exp_t);
+bool coerce_ulong_type(exp_t);
 bool coerce_sint_type(exp_t);
 bool coerce_to_bool(exp_t);
   
