@@ -80,6 +80,21 @@ void set_tconly() {
 void set_cfonly() {
   stop_after_pass = stop_after_pass < FlowAnalysis ? stop_after_pass : FlowAnalysis;
 }
+void set_tocmainonly() {
+  stop_after_pass = stop_after_pass < Toc ? stop_after_pass : Toc;
+}
+void set_aronly() {
+  stop_after_pass = stop_after_pass < AggregateRemoval ? stop_after_pass : AggregateRemoval;
+}
+void set_lronly() {
+  stop_after_pass = stop_after_pass < LabelRemoval ? stop_after_pass : LabelRemoval;
+}
+void set_tronly() {
+  stop_after_pass = stop_after_pass < TempRename ? stop_after_pass : TempRename;
+}
+void set_cronly() {
+  stop_after_pass = stop_after_pass < CastRemoval ? stop_after_pass : CastRemoval;
+}
 void set_toconly() {
   stop_after_pass = stop_after_pass < EvalOrder ? stop_after_pass : EvalOrder;
 }

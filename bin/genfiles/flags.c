@@ -426,5 +426,20 @@ if(_T2 >= 4)goto _TL6;_T0=Cyc_Flags_stop_after_pass;goto _TL7;_TL6: _T0=4U;_TL7:
 void Cyc_Flags_set_cfonly (void){enum Cyc_Flags_Cyclone_Passes _T0;enum Cyc_Flags_Cyclone_Passes _T1;int _T2;_T1=Cyc_Flags_stop_after_pass;_T2=(int)_T1;
 if(_T2 >= 6)goto _TL8;_T0=Cyc_Flags_stop_after_pass;goto _TL9;_TL8: _T0=6U;_TL9: Cyc_Flags_stop_after_pass=_T0;}
 # 83
+void Cyc_Flags_set_tocmainonly (void){enum Cyc_Flags_Cyclone_Passes _T0;enum Cyc_Flags_Cyclone_Passes _T1;int _T2;_T1=Cyc_Flags_stop_after_pass;_T2=(int)_T1;
+if(_T2 >= 9)goto _TLA;_T0=Cyc_Flags_stop_after_pass;goto _TLB;_TLA: _T0=9U;_TLB: Cyc_Flags_stop_after_pass=_T0;}
+# 86
+void Cyc_Flags_set_aronly (void){enum Cyc_Flags_Cyclone_Passes _T0;enum Cyc_Flags_Cyclone_Passes _T1;int _T2;_T1=Cyc_Flags_stop_after_pass;_T2=(int)_T1;
+if(_T2 >= 10)goto _TLC;_T0=Cyc_Flags_stop_after_pass;goto _TLD;_TLC: _T0=10U;_TLD: Cyc_Flags_stop_after_pass=_T0;}
+# 89
+void Cyc_Flags_set_lronly (void){enum Cyc_Flags_Cyclone_Passes _T0;enum Cyc_Flags_Cyclone_Passes _T1;int _T2;_T1=Cyc_Flags_stop_after_pass;_T2=(int)_T1;
+if(_T2 >= 11)goto _TLE;_T0=Cyc_Flags_stop_after_pass;goto _TLF;_TLE: _T0=11U;_TLF: Cyc_Flags_stop_after_pass=_T0;}
+# 92
+void Cyc_Flags_set_tronly (void){enum Cyc_Flags_Cyclone_Passes _T0;enum Cyc_Flags_Cyclone_Passes _T1;int _T2;_T1=Cyc_Flags_stop_after_pass;_T2=(int)_T1;
+if(_T2 >= 12)goto _TL10;_T0=Cyc_Flags_stop_after_pass;goto _TL11;_TL10: _T0=12U;_TL11: Cyc_Flags_stop_after_pass=_T0;}
+# 95
+void Cyc_Flags_set_cronly (void){enum Cyc_Flags_Cyclone_Passes _T0;enum Cyc_Flags_Cyclone_Passes _T1;int _T2;_T1=Cyc_Flags_stop_after_pass;_T2=(int)_T1;
+if(_T2 >= 13)goto _TL12;_T0=Cyc_Flags_stop_after_pass;goto _TL13;_TL12: _T0=13U;_TL13: Cyc_Flags_stop_after_pass=_T0;}
+# 98
 void Cyc_Flags_set_toconly (void){enum Cyc_Flags_Cyclone_Passes _T0;enum Cyc_Flags_Cyclone_Passes _T1;int _T2;_T1=Cyc_Flags_stop_after_pass;_T2=(int)_T1;
-if(_T2 >= 14)goto _TLA;_T0=Cyc_Flags_stop_after_pass;goto _TLB;_TLA: _T0=14U;_TLB: Cyc_Flags_stop_after_pass=_T0;}
+if(_T2 >= 14)goto _TL14;_T0=Cyc_Flags_stop_after_pass;goto _TL15;_TL14: _T0=14U;_TL15: Cyc_Flags_stop_after_pass=_T0;}

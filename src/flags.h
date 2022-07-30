@@ -136,6 +136,11 @@ void set_parseonly();
 void set_crgnonly();
 void set_tconly();
 void set_cfonly();
+void set_tocmainonly();
+void set_aronly();
+void set_lronly();
+void set_tronly();
+void set_cronly();
 void set_toconly(); // somewhat misnamed, just doesn't call C compiler!
 
   // true for building the bootstrapped compiler; lexer strips out

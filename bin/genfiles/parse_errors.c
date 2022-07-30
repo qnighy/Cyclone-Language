@@ -351,7 +351,7 @@ extern int Cyc_printf(struct _fat_ptr,struct _fat_ptr);
 extern void exit(int);
 # 43 "warn.h"
 void Cyc_Warn_err(unsigned,struct _fat_ptr,struct _fat_ptr);
-# 149 "flags.h"
+# 154 "flags.h"
 extern int Cyc_Flags_print_parser_state_and_token;
 # 29 "parse.h"
 struct _fat_ptr Cyc_token2string(int);struct Cyc_Yyltype{int timestamp;int first_line;int first_column;int last_line;int last_column;};

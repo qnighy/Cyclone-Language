@@ -445,9 +445,9 @@ void*Cyc_Warn_impos(struct _fat_ptr,struct _fat_ptr);
 struct _fat_ptr Cyc_Absynpp_prim2string(enum Cyc_Absyn_Primop);
 # 92 "flags.h"
 extern int Cyc_Flags_print_unprovable;
-# 157 "flags.h"
+# 162 "flags.h"
 extern unsigned Cyc_Flags_max_vc_paths;
-# 162
+# 167
 extern unsigned Cyc_Flags_max_vc_term_size;struct _tuple11{unsigned f0;int f1;};
 # 28 "evexp.h"
 extern struct _tuple11 Cyc_Evexp_eval_const_uint_exp(struct Cyc_Absyn_Exp*);

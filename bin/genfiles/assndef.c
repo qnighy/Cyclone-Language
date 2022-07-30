@@ -407,7 +407,7 @@ struct _fat_ptr Cyc_Absynpp_exp2string(struct Cyc_Absyn_Exp*);
 struct _fat_ptr Cyc_Absynpp_qvar2string(struct _tuple0*);
 # 74
 struct _fat_ptr Cyc_Absynpp_prim2string(enum Cyc_Absyn_Primop);
-# 168 "flags.h"
+# 173 "flags.h"
 extern int Cyc_Flags_better_widen;struct _tuple11{unsigned f0;int f1;};
 # 28 "evexp.h"
 extern struct _tuple11 Cyc_Evexp_eval_const_uint_exp(struct Cyc_Absyn_Exp*);

@@ -435,7 +435,7 @@ void Cyc_Warn_err(unsigned,struct _fat_ptr,struct _fat_ptr);
 void*Cyc_Warn_impos(struct _fat_ptr,struct _fat_ptr);struct Cyc_Warn_String_Warn_Warg_struct{int tag;struct _fat_ptr f1;};
 # 79
 void*Cyc_Warn_impos2(struct _fat_ptr);
-# 145 "flags.h"
+# 150 "flags.h"
 extern int Cyc_Flags_compile_for_boot;struct Cyc_Lex_Trie;struct _union_TrieChildren_Zero{int tag;int val;};struct _tuple26{int f0;struct Cyc_Lex_Trie*f1;};struct _union_TrieChildren_One{int tag;struct _tuple26 val;};struct _union_TrieChildren_Many{int tag;struct Cyc_Lex_Trie**val;};union Cyc_Lex_TrieChildren{struct _union_TrieChildren_Zero Zero;struct _union_TrieChildren_One One;struct _union_TrieChildren_Many Many;};
 # 50 "lex.cyl"
 union Cyc_Lex_TrieChildren Cyc_Lex_Zero (void){union Cyc_Lex_TrieChildren _T0;{union Cyc_Lex_TrieChildren _T1;_T1.Zero.tag=1U;_T1.Zero.val=0;_T0=_T1;}return _T0;}

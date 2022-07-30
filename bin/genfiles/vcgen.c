@@ -379,7 +379,7 @@ extern int Cyc_strcmp(struct _fat_ptr,struct _fat_ptr);
 extern int Cyc_Flags_warn_assert;
 # 86
 extern int Cyc_Flags_allpaths;
-# 153 "flags.h"
+# 158 "flags.h"
 extern unsigned Cyc_Flags_max_vc_summary;
 # 37 "position.h"
 extern struct _fat_ptr Cyc_Position_string_of_segment(unsigned);struct Cyc_AssnDef_ExistAssnFn;struct _union_Nmspace_Abs_n{int tag;struct Cyc_List_List*val;};struct _union_Nmspace_Rel_n{int tag;struct Cyc_List_List*val;};struct _union_Nmspace_C_n{int tag;struct Cyc_List_List*val;};struct _union_Nmspace_Loc_n{int tag;int val;};union Cyc_Absyn_Nmspace{struct _union_Nmspace_Abs_n Abs_n;struct _union_Nmspace_Rel_n Rel_n;struct _union_Nmspace_C_n C_n;struct _union_Nmspace_Loc_n Loc_n;};struct _tuple2{union Cyc_Absyn_Nmspace f0;struct _fat_ptr*f1;};
