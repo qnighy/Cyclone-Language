@@ -1378,9 +1378,15 @@ static exp_t incr_lvalue(exp_t e1, incrementor_t incr) {
   res->topt = e1->topt;
   return res;
 }
+static type_t same_type_lvalue(type_t t, `a f_env) {
+  return t;
+}
+static type_t address_type_lvalue(type_t t, bool ignore) {
+  return cstar_type(t,mt_tq);
+}
 
 static void lvalue_assign_stmt(stmt_t s,list_t<field_name_t,`H> fs,
-			       exp_t f(exp_t,`a), `a f_env);
+			       exp_t f(exp_t,`a), type_t ft(type_t,`a), `a f_env);
 
 // e1 is the result of translating an lvalue.  fs is the path of struct
 // fields that we're assigning to on e1 (if any).  The translation
@@ -1389,14 +1395,17 @@ static void lvalue_assign_stmt(stmt_t s,list_t<field_name_t,`H> fs,
 // We replace el in e1 with f(el,env)
 // We assume that variables in f(el,env) will not be captured by any
 static void lvalue_assign(exp_t e1, list_t<field_name_t,`H> fs,
-			  exp_t f(exp_t,`a), `a f_env){
+			  exp_t f(exp_t,`a), type_t ft(type_t,`a), `a f_env){
   switch (e1->r) {
-  case &StmtExp_e(s): lvalue_assign_stmt(s,fs,f,f_env); break;
-  case &Cast_e(t,e,_,_):  lvalue_assign(e,fs,f,f_env); break;
+  case &StmtExp_e(s): lvalue_assign_stmt(s,fs,f,ft,f_env); break;
+  case &Cast_e(*t,e,_,_):
+    lvalue_assign(e,fs,f,ft,f_env);
+    *t = ft(*t, f_env);
+    break;
   case &AggrMember_e(e,fld,is_tagged,is_read):
     // Hack: strip off the struct member -- the base case adds it back in.
     e1->r = e->r;
-    lvalue_assign(e1,new List(fld,fs),f,f_env);
+    lvalue_assign(e1,new List(fld,fs),f,ft,f_env);
     break;
   default:
     // Note: this may not be an lvalue b/c of &arr where arr has an array type.
@@ -1412,12 +1421,12 @@ static void lvalue_assign(exp_t e1, list_t<field_name_t,`H> fs,
   }
 }
 static void lvalue_assign_stmt(stmt_t s,list_t<field_name_t,`H> fs,
-			       exp_t f(exp_t,`a), `a f_env) {
+			       exp_t f(exp_t,`a), type_t ft(type_t,`a), `a f_env) {
   switch (s->r) {
-  case &Exp_s(e1):    lvalue_assign(e1,fs,f,f_env);      break;
+  case &Exp_s(e1):    lvalue_assign(e1,fs,f,ft,f_env);      break;
     // we assume free vars of e2 are not captured by d
-  case &Decl_s(d,s2): lvalue_assign_stmt(s2,fs,f,f_env); break;
-  case &Seq_s(_,s2):  lvalue_assign_stmt(s2,fs,f,f_env); break;
+  case &Decl_s(d,s2): lvalue_assign_stmt(s2,fs,f,ft,f_env); break;
+  case &Seq_s(_,s2):  lvalue_assign_stmt(s2,fs,f,ft,f_env); break;
   default: toc_impos("lvalue_assign_stmt: ",s);
   }
 }
@@ -1923,7 +1932,7 @@ static void exp_to_c(env_t nv, exp_t e) {
 					 set_type(signed_int_exp(1,DL),slong_type)));
       }
     } else if(elt_typ == void_type && !is_lvalue(e2)) {
-      lvalue_assign(e2,NULL,incr_lvalue,incr);
+      lvalue_assign(e2,NULL,incr_lvalue,same_type_lvalue,incr);
       *e = *e2;
     }
     break;
@@ -2018,7 +2027,7 @@ static void exp_to_c(env_t nv, exp_t e) {
       // declarations of temps, bound checks, etc.  If so we look into e1,
       // find the lvalue, and put the assignment there.
       if (!is_lvalue(e1)) {
-        lvalue_assign(e1,NULL,assignop_lvalue,new $(popt,e2));
+        lvalue_assign(e1,NULL,assignop_lvalue,same_type_lvalue,new $(popt,e2));
         *e = *e1;
       }
     }
@@ -2372,9 +2381,8 @@ static void exp_to_c(env_t nv, exp_t e) {
     exp_to_c(nv,e1);
     set_lhs(nv,false);
     if(!is_lvalue(e1)) {
-      lvalue_assign(e1,NULL,address_lvalue,true);
-      // the wrong cast got pushed out, so as a kludge, just re-cast
-      e->r = cast_it_r(typ_to_c((type_t)old_typ),e1);
+      lvalue_assign(e1,NULL,address_lvalue,address_type_lvalue,true);
+      e->r = e1->r;
     } else if (Kinds::kind_leq(&Kinds::ak,type_kind((type_t)e1->topt)))
       // we could be taking the address of an abstract member, so insert a cast
       e->r = cast_it_r(typ_to_c((type_t)old_typ),
